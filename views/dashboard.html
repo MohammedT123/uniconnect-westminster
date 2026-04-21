@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Dashboard – Uni-Connect Westminster</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--p:#7c3aed;--pd:#5b21b6;--bg:#f8fafc;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--r:20px}
+    body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    nav{background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo{display:flex;align-items:center;gap:12px;font-weight:900;font-size:16px;text-decoration:none;color:var(--text);letter-spacing:-.3px}
+    .logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px;box-shadow:0 8px 20px rgba(124,58,237,.35)}
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .user-chip{background:#f8fafc;border:1px solid var(--border);border-radius:999px;padding:7px 16px;font-size:13px;font-weight:600;color:var(--muted);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .btn{padding:9px 18px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text);font-family:inherit;transition:.2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+    .btn:hover{background:#f1f5f9;transform:translateY(-1px)}
+    .btn-p{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(124,58,237,.3)}
+    .btn-p:hover{box-shadow:0 12px 28px rgba(124,58,237,.4);transform:translateY(-2px)}
+    .wrap{max-width:1140px;margin:0 auto;padding:36px 24px}
+    .hero{border-radius:28px;padding:48px;color:#fff;margin-bottom:32px;position:relative;overflow:hidden;background:linear-gradient(135deg,#4c1d95 0%,#7c3aed 40%,#a855f7 100%)}
+    .hero-bg{position:absolute;inset:0;overflow:hidden}
+    .hero-circle-1{position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:rgba(255,255,255,.07);border-radius:50%}
+    .hero-circle-2{position:absolute;bottom:-100px;right:120px;width:220px;height:220px;background:rgba(255,255,255,.05);border-radius:50%}
+    .hero-circle-3{position:absolute;top:40px;right:280px;width:120px;height:120px;background:rgba(255,255,255,.04);border-radius:50%}
+    .hero-content{position:relative}
+    .hero-greeting{font-size:13px;font-weight:600;opacity:.75;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+    .hero h1{font-size:34px;font-weight:900;margin-bottom:10px;letter-spacing:-.5px;line-height:1.1}
+    .hero p{font-size:15px;opacity:.8;max-width:500px;line-height:1.65;margin-bottom:28px}
+    .hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+    .hero-btn{padding:12px 22px;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+    .hero-btn-w{background:#fff;color:#7c3aed;box-shadow:0 8px 20px rgba(0,0,0,.15)}
+    .hero-btn-w:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.2)}
+    .hero-btn-o{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.3);backdrop-filter:blur(10px)}
+    .hero-btn-o:hover{background:rgba(255,255,255,.25);transform:translateY(-2px)}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px}
+    @media(max-width:700px){.stats{grid-template-columns:1fr 1fr}}
+    .stat{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:22px;text-align:center;transition:.2s;position:relative;overflow:hidden}
+    .stat::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c3aed,#a855f7);opacity:0;transition:.2s}
+    .stat:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(124,58,237,.1)}
+    .stat:hover::before{opacity:1}
+    .stat-icon{font-size:22px;margin-bottom:10px;display:block}
+    .stat-num{font-size:28px;font-weight:900;color:var(--p);line-height:1;margin-bottom:5px}
+    .stat-label{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    .section-title{font-size:19px;font-weight:900;letter-spacing:-.3px}
+    .section-sub{font-size:13px;color:var(--muted);margin-top:3px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:40px}
+    @media(max-width:860px){.grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:540px){.grid{grid-template-columns:1fr}}
+    .card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:28px;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+    .card::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,237,.06),transparent);opacity:0;transition:.25s}
+    .card:hover{transform:translateY(-4px);border-color:rgba(124,58,237,.3);box-shadow:0 16px 48px rgba(124,58,237,.12)}
+    .card:hover::after{opacity:1}
+    .card-icon-wrap{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;margin-bottom:16px;font-size:26px}
+    .card-icon-jobs{background:linear-gradient(135deg,#fef3c7,#fde68a)}
+    .card-icon-acc{background:linear-gradient(135deg,#d1fae5,#a7f3d0)}
+    .card-icon-comm{background:linear-gradient(135deg,#e0e7ff,#c7d2fe)}
+    .card h3{font-size:18px;font-weight:800;margin-bottom:8px;letter-spacing:-.2px}
+    .card p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+    .card-tag{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:999px;background:#f8f7ff;color:var(--p);font-size:12px;font-weight:700;border:1px solid rgba(124,58,237,.15)}
+    .card-arrow{position:absolute;top:24px;right:24px;width:32px;height:32px;border-radius:10px;background:#f8fafc;display:grid;place-items:center;font-size:14px;opacity:0;transition:.2s}
+    .card:hover .card-arrow{opacity:1;background:#f3f0ff;color:var(--p)}
+    .quick{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:40px}
+    @media(max-width:600px){.quick{grid-template-columns:1fr}}
+    .quick-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px 22px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:.2s}
+    .quick-card:hover{transform:translateY(-2px);border-color:rgba(124,58,237,.3);box-shadow:0 8px 24px rgba(124,58,237,.08)}
+    .quick-icon{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-size:20px;flex-shrink:0}
+    .quick-text h4{font-size:14px;font-weight:800;margin-bottom:3px}
+    .quick-text p{font-size:12px;color:var(--muted)}
+    .quick-arrow{margin-left:auto;color:var(--muted);font-size:16px}
+    .footer{text-align:center;padding:20px;color:var(--muted);font-size:12px;border-top:1px solid var(--border)}
+    .footer span{color:var(--p);font-weight:700}
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="/dashboard">
+      <div class="logo-icon">U</div>
+      Uni-Connect Westminster
+    </a>
+    <div class="nav-right">
+      <div class="user-chip" id="userChip">Loading…</div>
+      <button class="btn" onclick="window.location.href='/profile'">👤 Profile</button>
+      <button class="btn btn-p" onclick="window.location.href='/saved'">⭐ Saved</button>
+      <button class="btn" id="btnLogout">Sign out</button>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-bg">
+        <div class="hero-circle-1"></div>
+        <div class="hero-circle-2"></div>
+        <div class="hero-circle-3"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-greeting">University of Westminster</div>
+        <h1 id="heroTitle">Welcome back 👋</h1>
+        <p>Your all-in-one student platform. Find jobs, discover accommodation and connect with communities — everything in one place.</p>
+        <div class="hero-btns">
+          <button class="hero-btn hero-btn-w" onclick="window.location.href='/jobs'">💼 Browse Jobs</button>
+          <button class="hero-btn hero-btn-o" onclick="window.location.href='/accommodation'">🏠 Find Housing</button>
+          <button class="hero-btn hero-btn-o" onclick="window.location.href='/communities'">👥 Communities</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-icon">💼</span>
+        <div class="stat-num" id="statJobs">—</div>
+        <div class="stat-label">Jobs Available</div>
+      </div>
+      <div class="stat">
+        <span class="stat-icon">🏠</span>
+        <div class="stat-num" id="statAcc">—</div>
+        <div class="stat-label">Accommodation</div>
+      </div>
+      <div class="stat">
+        <span class="stat-icon">👥</span>
+        <div class="stat-num" id="statComm">—</div>
+        <div class="stat-label">Communities</div>
+      </div>
+      <div class="stat">
+        <span class="stat-icon">⭐</span>
+        <div class="stat-num" id="statSaved">—</div>
+        <div class="stat-label">Items Saved</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div>
+        <div class="section-title">Explore</div>
+        <div class="section-sub">Everything you need for student life at Westminster</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card" onclick="window.location.href='/jobs'">
+        <div class="card-arrow">→</div>
+        <div class="card-icon-wrap card-icon-jobs">💼</div>
+        <h3>Student Jobs</h3>
+        <p>Browse live part-time jobs and internships near Westminster powered by the Adzuna API.</p>
+        <span class="card-tag">🟢 Live API Data</span>
+      </div>
+      <div class="card" onclick="window.location.href='/accommodation'">
+        <div class="card-arrow">→</div>
+        <div class="card-icon-wrap card-icon-acc">🏠</div>
+        <h3>Accommodation</h3>
+        <p>Discover student-friendly housing near campus. View full details including price, type and distance.</p>
+        <span class="card-tag">Browse → Save → Enquire</span>
+      </div>
+      <div class="card" onclick="window.location.href='/communities'">
+        <div class="card-arrow">→</div>
+        <div class="card-icon-wrap card-icon-comm">👥</div>
+        <h3>Communities</h3>
+        <p>Find societies, clubs and social groups at Westminster. Filter by category and connect with others.</p>
+        <span class="card-tag">Browse → Save → Join</span>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div>
+        <div class="section-title">Quick Actions</div>
+        <div class="section-sub">Jump straight to what you need</div>
+      </div>
+    </div>
+
+    <div class="quick">
+      <div class="quick-card" onclick="window.location.href='/profile'">
+        <div class="quick-icon" style="background:#ede9fe">👤</div>
+        <div class="quick-text">
+          <h4>My Profile</h4>
+          <p>View your account info and saved item summary</p>
+        </div>
+        <div class="quick-arrow">→</div>
+      </div>
+      <div class="quick-card" onclick="window.location.href='/saved'">
+        <div class="quick-icon" style="background:#fef9c3">⭐</div>
+        <div class="quick-text">
+          <h4>Saved Items</h4>
+          <p>Check all your saved jobs, accommodation and communities</p>
+        </div>
+        <div class="quick-arrow">→</div>
+      </div>
+      <div class="quick-card" onclick="window.location.href='/jobs'">
+        <div class="quick-icon" style="background:#dcfce7">🔎</div>
+        <div class="quick-text">
+          <h4>Search Jobs</h4>
+          <p>Find part-time work and internships near Westminster</p>
+        </div>
+        <div class="quick-arrow">→</div>
+      </div>
+      <div class="quick-card" onclick="window.location.href='/communities'">
+        <div class="quick-icon" style="background:#f3e8ff">👥</div>
+        <div class="quick-text">
+          <h4>Explore Communities</h4>
+          <p>Discover clubs, societies and student groups</p>
+        </div>
+        <div class="quick-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div>
+        <div class="section-title">🎓 Student Life</div>
+        <div class="section-sub">Everything to help you settle into Westminster</div>
+      </div>
+    </div>
+
+    <div class="quick">
+      <div class="quick-card" onclick="window.location.href='/tips'">
+        <div class="quick-icon" style="background:#fef9c3">🎓</div>
+        <div class="quick-text">
+          <h4>Student Survival Guide</h4>
+          <p>Tips on transport, banking, discounts and settling in</p>
+        </div>
+        <div class="quick-arrow">→</div>
+      </div>
+      <div class="quick-card" onclick="window.location.href='/services'">
+        <div class="quick-icon" style="background:#e0f2fe">🏛️</div>
+        <div class="quick-text">
+          <h4>Student Services</h4>
+          <p>Results, timetables, Blackboard, finance and support</p>
+        </div>
+        <div class="quick-arrow">→</div>
+      </div>
+      <div class="quick-card" onclick="window.location.href='/map'">
+        <div class="quick-icon" style="background:#dcfce7">🗺️</div>
+        <div class="quick-text">
+          <h4>Campus Map</h4>
+          <p>Find Westminster campuses, tube stations and key services</p>
+        </div>
+        <div class="quick-arrow">→</div>
+      </div>
+      <div class="quick-card" onclick="window.location.href='/noticeboard'">
+        <div class="quick-icon" style="background:#fce7f3">📋</div>
+        <div class="quick-text">
+          <h4>Student Noticeboard</h4>
+          <p>Find flatmates, sell textbooks and share events</p>
+        </div>
+        <div class="quick-arrow">→</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Uni-Connect Westminster © <span id="yr"></span> • Built for <span>University of Westminster</span> students
+  </div>
+
+  <script>
+    const token=localStorage.getItem("token");
+    const user=(()=>{try{return JSON.parse(localStorage.getItem("user")||"null")}catch{return null}})();
+    if(!token||!user){window.location.href="/login";}
+    document.getElementById("userChip").textContent=user?.email||"Logged in";
+    document.getElementById("yr").textContent=new Date().getFullYear();
+    document.getElementById("btnLogout").addEventListener("click",()=>{localStorage.clear();window.location.href="/login";});
+    const h={"Content-Type":"application/json","Authorization":`Bearer ${token}`};
+    async function loadStats(){
+      try{
+        const [j,a,c,s]=await Promise.all([
+          fetch("/api/jobs",{headers:h}).then(r=>r.json()),
+          fetch("/api/accommodation",{headers:h}).then(r=>r.json()),
+          fetch("/api/communities",{headers:h}).then(r=>r.json()),
+          fetch("/api/my-saved",{headers:h}).then(r=>r.json())
+        ]);
+        document.getElementById("statJobs").textContent=Array.isArray(j)?j.length:"—";
+        document.getElementById("statAcc").textContent=Array.isArray(a)?a.length:"—";
+        document.getElementById("statComm").textContent=Array.isArray(c)?c.length:"—";
+        const saved=s||{};
+        document.getElementById("statSaved").textContent=((saved.jobs||[]).length+(saved.acc||[]).length+(saved.communities||[]).length);
+      }catch(e){console.log("Stats error",e);}
+    }
+    loadStats();
+  </script>
+</body>
+</html>

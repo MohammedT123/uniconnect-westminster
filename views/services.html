@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Student Services – Uni-Connect Westminster</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--p:#7c3aed;--pd:#5b21b6;--bg:#f8fafc;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--shadow:0 4px 24px rgba(0,0,0,.06);--r:16px}
+    body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+    nav{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;text-decoration:none;color:var(--text)}
+    .logo-icon{width:36px;height:36px;background:var(--p);border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px}
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .btn{padding:9px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text);font-family:inherit;transition:.2s;text-decoration:none;display:inline-block}
+    .btn:hover{background:#f1f5f9}
+    .wrap{max-width:1100px;margin:0 auto;padding:36px 24px}
+    .hero{background:linear-gradient(135deg,#4c1d95,#7c3aed,#a855f7);border-radius:24px;padding:40px;color:#fff;margin-bottom:36px;position:relative;overflow:hidden}
+    .hero::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:rgba(255,255,255,.07);border-radius:50%}
+    .hero h1{font-size:28px;font-weight:900;margin-bottom:8px;position:relative}
+    .hero p{font-size:15px;opacity:.85;max-width:500px;line-height:1.6;position:relative}
+    .section{margin-bottom:36px}
+    .section-title{font-size:19px;font-weight:900;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+    .section-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media(max-width:860px){.grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:540px){.grid{grid-template-columns:1fr}}
+    .service-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);transition:.2s;text-decoration:none;color:var(--text);display:block}
+    .service-card:hover{transform:translateY(-3px);border-color:rgba(124,58,237,.3);box-shadow:0 8px 32px rgba(124,58,237,.1)}
+    .card-icon{font-size:32px;margin-bottom:14px;display:block}
+    .card-title{font-size:16px;font-weight:800;margin-bottom:6px}
+    .card-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+    .card-link{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--p);background:#f3f0ff;padding:6px 12px;border-radius:8px}
+    .notice-box{background:#f3f0ff;border:1px solid rgba(124,58,237,.2);border-radius:14px;padding:20px;margin-bottom:24px;display:flex;gap:14px;align-items:flex-start}
+    .notice-box-icon{font-size:24px;flex-shrink:0}
+    .notice-box h4{font-size:14px;font-weight:800;color:var(--p);margin-bottom:4px}
+    .notice-box p{font-size:13px;color:var(--muted);line-height:1.5}
+    .status-bar{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 24px;margin-bottom:36px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .status-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+    .status-dot{width:8px;height:8px;border-radius:50%;background:#16a34a}
+    .status-dot.amber{background:#d97706}
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="/dashboard"><div class="logo-icon">U</div>Uni-Connect Westminster</a>
+    <div class="nav-right">
+      <a class="btn" href="/tips">🎓 Student Tips</a>
+      <a class="btn" href="/dashboard">Dashboard</a>
+      <button class="btn" id="btnLogout">Logout</button>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="hero">
+      <h1>🏛️ Student Services</h1>
+      <p>Access all your key University of Westminster student services in one place — results, registration, timetables, finance and more.</p>
+    </div>
+
+    <div class="notice-box">
+      <div class="notice-box-icon">💡</div>
+      <div>
+        <h4>Quick tip</h4>
+        <p>All links below open official University of Westminster pages. You will need your Westminster student login credentials to access most of these services. If you have forgotten your password visit the IT Support page at the bottom of this page.</p>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-item"><span class="status-dot"></span>Student Hub — Online</div>
+      <div class="status-item"><span class="status-dot"></span>Blackboard — Online</div>
+      <div class="status-item"><span class="status-dot"></span>Office 365 — Online</div>
+      <div class="status-item"><span class="status-dot amber"></span>Library — Check hours</div>
+      <div class="status-item"><span class="status-dot"></span>IT Support — Available</div>
+    </div>
+
+    <!-- ACADEMIC SERVICES -->
+    <div class="section">
+      <div class="section-title">📚 Academic Services</div>
+      <div class="section-sub">Manage your studies, results and academic records</div>
+      <div class="grid">
+
+        <a class="service-card" href="https://www.westminster.ac.uk/current-students" target="_blank">
+          <span class="card-icon">🎓</span>
+          <div class="card-title">Student Hub</div>
+          <div class="card-desc">Your central hub for all university services. Access your student record, timetable, results and all key student systems from one place.</div>
+          <span class="card-link">Open Student Hub ↗</span>
+        </a>
+
+        <a class="service-card" href="https://srs21live.wmin.ac.uk/urd/sits.urd/run/siw_sso.signon" target="_blank">
+          <span class="card-icon">📊</span>
+          <div class="card-title">Exam Results (My Student Record)</div>
+          <div class="card-desc">View your module results, assessment grades and progression decisions. Log in with your Westminster username and password to access your record.</div>
+          <span class="card-link">View results ↗</span>
+        </a>
+
+        <a class="service-card" href="https://www.westminster.ac.uk/study/current-students/your-studies/module-registration" target="_blank">
+          <span class="card-icon">📋</span>
+          <div class="card-title">Module Registration</div>
+          <div class="card-desc">Register for your modules each academic year. Complete module registration before the deadline to avoid any disruption to your studies.</div>
+          <span class="card-link">Register modules ↗</span>
+        </a>
+
+        <a class="service-card" href="https://www.westminster.ac.uk/current-students/studies/timetables" target="_blank">
+          <span class="card-icon">🗓️</span>
+          <div class="card-title">Timetable</div>
+          <div class="card-desc">View your personal lecture and seminar timetable. Check room allocations, lecture times and any timetable changes announced by your department.</div>
+          <span class="card-link">View timetable ↗</span>
+        </a>
+
+        <a class="service-card" href="https://learning.westminster.ac.uk" target="_blank">
+          <span class="card-icon">💻</span>
+          <div class="card-title">Blackboard (VLE)</div>
+          <div class="card-desc">Access your course materials, lecture slides, assignment briefs and submission portals. Your primary learning platform for all modules at Westminster.</div>
+          <span class="card-link">Open Blackboard ↗</span>
+        </a>
+
+        <a class="service-card" href="https://www.westminster.ac.uk/study/current-students/your-studies/exams-and-assessments" target="_blank">
+          <span class="card-icon">📝</span>
+          <div class="card-title">Exams and Assessments</div>
+          <div class="card-desc">Find information about exam schedules, assessment guidelines, extenuating circumstances and the university academic regulations and appeals process.</div>
+          <span class="card-link">View exams info ↗</span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- FINANCE AND ADMIN -->
+    <div class="section">
+      <div class="section-title">💰 Finance and Administration</div>
+      <div class="section-sub">Manage your fees, funding and official documents</div>
+      <div class="grid">
+
+        <a class="service-card" href="https://www.westminster.ac.uk/study/current-students/fees-and-funding" target="_blank">
+          <span class="card-icon">💳</span>
+          <div class="card-title">Fees and Funding</div>
+          <div class="card-desc">View your tuition fee account, check payment deadlines, set up payment plans and find information about bursaries, scholarships and emergency funding.</div>
+          <span class="card-link">Manage fees ↗</span>
+        </a>
+
+        <a class="service-card" href="https://www.gov.uk/student-finance-register-login" target="_blank">
+          <span class="card-icon">🏦</span>
+          <div class="card-title">Student Finance England</div>
+          <div class="card-desc">Manage your student loan, check payment dates and update your details with Student Finance England. Loan payments are made three times per year.</div>
+          <span class="card-link">Student Finance ↗</span>
+        </a>
+
+        <a class="service-card" href="https://www.westminster.ac.uk/study/current-students/your-studies/certificates-and-documents" target="_blank">
+          <span class="card-icon">📄</span>
+          <div class="card-title">Official Documents</div>
+          <div class="card-desc">Request official letters, enrollment certificates, council tax exemption letters and transcripts. Usually processed within five working days of request.</div>
+          <span class="card-link">Request documents ↗</span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- SUPPORT SERVICES -->
+    <div class="section">
+      <div class="section-title">🤝 Support Services</div>
+      <div class="section-sub">Get help when you need it</div>
+      <div class="grid">
+
+        <a class="service-card" href="https://www.westminster.ac.uk/study/current-students/support-and-facilities/student-wellbeing" target="_blank">
+          <span class="card-icon">🧠</span>
+          <div class="card-title">Student Wellbeing</div>
+          <div class="card-desc">Access free counselling, mental health support and disability services. You can self-refer online and appointments are available in person and remotely.</div>
+          <span class="card-link">Get support ↗</span>
+        </a>
+
+        <a class="service-card" href="https://engage-employability.westminster.ac.uk" target="_blank">
+          <span class="card-icon">💼</span>
+          <div class="card-title">Careers and Employability</div>
+          <div class="card-desc">Book appointments with careers advisors, get CV feedback, find graduate jobs and internships and access Westminster employer network and events.</div>
+          <span class="card-link">Visit careers ↗</span>
+        </a>
+
+        <a class="service-card" href="https://www.westminster.ac.uk/study/current-students/support-and-facilities/it-support" target="_blank">
+          <span class="card-icon">🖥️</span>
+          <div class="card-title">IT Support</div>
+          <div class="card-desc">Get help with your Westminster login, email, software access and campus computers. IT support is available via phone, email and walk-in at the IT helpdesk.</div>
+          <span class="card-link">IT helpdesk ↗</span>
+        </a>
+
+        <a class="service-card" href="https://www.westminster.ac.uk/study/current-students/resources/libraries" target="_blank">
+          <span class="card-icon">📖</span>
+          <div class="card-title">Library Services</div>
+          <div class="card-desc">Access physical and digital library resources, book study spaces, request books and get support from subject librarians for your assignments and research.</div>
+          <span class="card-link">Library portal ↗</span>
+        </a>
+
+        <a class="service-card" href="https://www.uwsu.com" target="_blank">
+          <span class="card-icon">🏛️</span>
+          <div class="card-title">Students Union (UWSU)</div>
+          <div class="card-desc">Your student union — societies, events, student representation, advice and advocacy. The SU is here to support you and represent your interests to the university.</div>
+          <span class="card-link">Visit UWSU ↗</span>
+        </a>
+
+        <a class="service-card" href="https://www.westminster.ac.uk/study/current-students/support-and-facilities/international-student-support" target="_blank">
+          <span class="card-icon">🌍</span>
+          <div class="card-title">International Student Support</div>
+          <div class="card-desc">Specialist support for international students including visa guidance, BRP collection, UKVI compliance and support with settling into life in the UK.</div>
+          <span class="card-link">International support ↗</span>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const token=localStorage.getItem("token");
+    const user=(()=>{try{return JSON.parse(localStorage.getItem("user")||"null")}catch{return null}})();
+    if(!token||!user){window.location.href="/login";}
+    document.getElementById("btnLogout").addEventListener("click",()=>{localStorage.clear();window.location.href="/login";});
+  </script>
+</body>
+</html>

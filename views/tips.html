@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Student Tips – Uni-Connect Westminster</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--p:#7c3aed;--pd:#5b21b6;--bg:#f8fafc;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--shadow:0 4px 24px rgba(0,0,0,.06);--r:16px}
+    body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+    nav{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;text-decoration:none;color:var(--text)}
+    .logo-icon{width:36px;height:36px;background:var(--p);border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px}
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .btn{padding:9px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text);font-family:inherit;transition:.2s;text-decoration:none;display:inline-block}
+    .btn:hover{background:#f1f5f9}
+    .btn-p{background:var(--p);color:#fff;border-color:transparent}
+    .btn-p:hover{background:var(--pd)}
+    .wrap{max-width:1000px;margin:0 auto;padding:36px 24px}
+    .hero{background:linear-gradient(135deg,#4c1d95,#7c3aed,#a855f7);border-radius:24px;padding:40px;color:#fff;margin-bottom:36px;position:relative;overflow:hidden}
+    .hero::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:rgba(255,255,255,.07);border-radius:50%}
+    .hero h1{font-size:28px;font-weight:900;margin-bottom:8px;position:relative}
+    .hero p{font-size:15px;opacity:.85;max-width:500px;line-height:1.6;position:relative}
+    .section{margin-bottom:36px}
+    .section-title{font-size:19px;font-weight:900;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+    .section-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    @media(max-width:640px){.grid{grid-template-columns:1fr}}
+    .tip-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:22px;box-shadow:var(--shadow);transition:.2s}
+    .tip-card:hover{transform:translateY(-2px);border-color:rgba(124,58,237,.3);box-shadow:0 8px 32px rgba(124,58,237,.08)}
+    .tip-icon{font-size:28px;margin-bottom:12px;display:block}
+    .tip-card h3{font-size:16px;font-weight:800;margin-bottom:8px}
+    .tip-card p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+    .tip-link{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--p);text-decoration:none;background:#f3f0ff;padding:6px 12px;border-radius:8px;transition:.2s}
+    .tip-link:hover{background:#ede9fe}
+    .info-box{background:#f3f0ff;border:1px solid rgba(124,58,237,.2);border-radius:14px;padding:20px;margin-bottom:16px;display:flex;gap:14px;align-items:flex-start}
+    .info-box-icon{font-size:24px;flex-shrink:0;margin-top:2px}
+    .info-box h4{font-size:14px;font-weight:800;color:var(--p);margin-bottom:4px}
+    .info-box p{font-size:13px;color:var(--muted);line-height:1.5}
+    .checklist{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .checklist li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text);line-height:1.5}
+    .check{width:20px;height:20px;border-radius:6px;background:#f0fdf4;border:1px solid #bbf7d0;display:grid;place-items:center;font-size:12px;flex-shrink:0;margin-top:1px}
+    .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    @media(max-width:640px){.contact-grid{grid-template-columns:1fr}}
+    .contact-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;box-shadow:var(--shadow)}
+    .contact-card .icon{font-size:28px;margin-bottom:10px;display:block}
+    .contact-card h4{font-size:14px;font-weight:800;margin-bottom:4px}
+    .contact-card p{font-size:12px;color:var(--muted);margin-bottom:10px}
+    .contact-card a{font-size:12px;font-weight:700;color:var(--p);text-decoration:none}
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="/dashboard"><div class="logo-icon">U</div>Uni-Connect Westminster</a>
+    <div class="nav-right">
+      <a class="btn" href="/dashboard">Dashboard</a>
+      <a class="btn" href="/map">🗺️ Campus Map</a>
+      <button class="btn" id="btnLogout">Logout</button>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="hero">
+      <h1>🎓 Student Survival Guide</h1>
+      <p>Everything you need to know to settle into life at the University of Westminster and London. From transport to banking to student discounts.</p>
+    </div>
+
+    <!-- GETTING STARTED -->
+    <div class="section">
+      <div class="section-title">🚀 Getting Started in London</div>
+      <div class="section-sub">Essential first steps for every new Westminster student</div>
+      <div class="grid">
+        <div class="tip-card">
+          <span class="tip-icon">🚇</span>
+          <h3>Get Your Student Oyster Card</h3>
+          <p>Apply for an 18+ Student Oyster photocard to get 30% off all TfL travel including the Tube, bus, Overground and Elizabeth line. Apply online through TfL before you arrive if possible.</p>
+          <a class="tip-link" href="https://tfl.gov.uk/fares/free-and-discounted-travel/18-plus-student-oyster-photocard" target="_blank">Apply on TfL ↗</a>
+        </div>
+        <div class="tip-card">
+          <span class="tip-icon">🏦</span>
+          <h3>Open a UK Bank Account</h3>
+          <p>You'll need a UK bank account to receive your student loan and pay rent. Monzo and Starling are the easiest to open with just your passport — no proof of address needed. Traditional banks like Barclays and HSBC offer student accounts with free railcards.</p>
+          <a class="tip-link" href="https://monzo.com" target="_blank">Try Monzo ↗</a>
+        </div>
+        <div class="tip-card">
+          <span class="tip-icon">🏥</span>
+          <h3>Register with a GP</h3>
+          <p>Register with a local GP (doctor) as soon as you arrive. You're entitled to free NHS healthcare as a student. Westminster has several GP practices near campus — try the Marylebone Health Centre on Marylebone Road or search NHS.uk for practices accepting new patients.</p>
+          <a class="tip-link" href="https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/" target="_blank">Find a GP ↗</a>
+        </div>
+        <div class="tip-card">
+          <span class="tip-icon">📱</span>
+          <h3>Get a UK SIM Card</h3>
+          <p>Pick up a UK SIM card at any phone shop or supermarket. SMARTY, Giffgaff and Three offer great value plans from £10/month with plenty of data. Most are rolling monthly contracts so no long-term commitment needed.</p>
+          <a class="tip-link" href="https://www.smarty.co.uk" target="_blank">Try SMARTY ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUDENT DISCOUNTS -->
+    <div class="section">
+      <div class="section-title">💰 Student Discounts & Saving Money</div>
+      <div class="section-sub">Make your student loan go further with these discounts</div>
+      <div class="grid">
+        <div class="tip-card">
+          <span class="tip-icon">🪪</span>
+          <h3>TOTUM / NUS Card</h3>
+          <p>Get a TOTUM card (formerly NUS Extra) for discounts at hundreds of retailers including ASOS, Co-op, and many restaurants. Costs around £14.99/year and pays for itself quickly.</p>
+          <a class="tip-link" href="https://www.totum.com" target="_blank">Get TOTUM ↗</a>
+        </div>
+        <div class="tip-card">
+          <span class="tip-icon">🍕</span>
+          <h3>Cheap Eats Near Campus</h3>
+          <p>Use apps like Too Good To Go for heavily discounted food near closing time. Lidl and Aldi on Edgware Road are the cheapest supermarkets near campus. Borough Market (20 min by tube) is great for cheap lunch on Saturdays.</p>
+          <a class="tip-link" href="https://www.toogoodtogo.com" target="_blank">Too Good To Go ↗</a>
+        </div>
+        <div class="tip-card">
+          <span class="tip-icon">🎬</span>
+          <h3>Entertainment Discounts</h3>
+          <p>Use your Westminster student email to get Spotify Student (£5.99/month includes Hulu), Apple Music Student, and Amazon Prime Student (6 months free then 50% off). Cinema: Odeon and Vue both offer student discounts on weekdays.</p>
+          <a class="tip-link" href="https://www.amazon.co.uk/prime/student" target="_blank">Prime Student ↗</a>
+        </div>
+        <div class="tip-card">
+          <span class="tip-icon">🚂</span>
+          <h3>16-25 Railcard</h3>
+          <p>If you're under 26, get a 16-25 Railcard for £30/year. It gives you 1/3 off all National Rail fares across the UK — perfect for visiting home or travelling around England. Pays for itself after just one or two trips.</p>
+          <a class="tip-link" href="https://www.16-25railcard.co.uk" target="_blank">Get Railcard ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUDY TIPS -->
+    <div class="section">
+      <div class="section-title">📚 Study & Campus Life</div>
+      <div class="section-sub">Make the most of what Westminster has to offer</div>
+      <div class="grid">
+        <div class="tip-card">
+          <span class="tip-icon">📖</span>
+          <h3>Best Study Spots</h3>
+          <p>The Marylebone Library (5th floor) is the best study spot on campus — arrive early for the best seats. Outside campus, try the British Library (free entry, stunning reading rooms) or any Wetherspoons with a laptop.</p>
+          <a class="tip-link" href="https://www.bl.uk/visit" target="_blank">British Library ↗</a>
+        </div>
+        <div class="tip-card">
+          <span class="tip-icon">💻</span>
+          <h3>Microsoft 365 for Free</h3>
+          <p>All Westminster students get Microsoft 365 (Word, Excel, PowerPoint, Teams) completely free. Log in at office.com with your @westminster.ac.uk email. You can install it on up to 5 devices.</p>
+          <a class="tip-link" href="https://www.office.com" target="_blank">Get Office 365 ↗</a>
+        </div>
+        <div class="tip-card">
+          <span class="tip-icon">🧠</span>
+          <h3>Student Wellbeing Support</h3>
+          <p>Westminster offers free counselling and mental health support to all students. The Student Wellbeing team can be contacted through the student portal. Don't wait until you're struggling — reach out early.</p>
+          <a class="tip-link" href="https://www.westminster.ac.uk/study/current-students/support-and-facilities/student-wellbeing" target="_blank">Wellbeing Support ↗</a>
+        </div>
+        <div class="tip-card">
+          <span class="tip-icon">🏋️</span>
+          <h3>Student Gym Membership</h3>
+          <p>Westminster students get discounted gym membership at the university sports facilities. Alternatively, PureGym and The Gym Group offer flexible no-contract memberships from £18/month across London.</p>
+          <a class="tip-link" href="https://www.puregym.com/student" target="_blank">PureGym Student ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FIRST WEEK CHECKLIST -->
+    <div class="section">
+      <div class="section-title">✅ First Week Checklist</div>
+      <div class="section-sub">Make sure you tick these off in your first week</div>
+      <div class="info-box">
+        <div class="info-box-icon">💡</div>
+        <div>
+          <h4>Pro tip</h4>
+          <p>Print or screenshot this checklist and work through it systematically. Students who complete these steps in the first week settle in significantly faster and avoid common pitfalls later on.</p>
+        </div>
+      </div>
+      <ul class="checklist">
+        <li><span class="check">✓</span>Collect your student ID card from the Student Centre</li>
+        <li><span class="check">✓</span>Set up your @westminster.ac.uk email and log into Blackboard (the university's learning platform)</li>
+        <li><span class="check">✓</span>Apply for your Student Oyster card online</li>
+        <li><span class="check">✓</span>Open a UK bank account (Monzo or Starling for quickest setup)</li>
+        <li><span class="check">✓</span>Register with a local GP near your accommodation</li>
+        <li><span class="check">✓</span>Get a UK SIM card</li>
+        <li><span class="check">✓</span>Attend your course induction and meet your Personal Tutor</li>
+        <li><span class="check">✓</span>Visit the Student Union and find out what societies are on offer</li>
+        <li><span class="check">✓</span>Download the TfL app and Citymapper for getting around London</li>
+        <li><span class="check">✓</span>Activate Microsoft 365 with your university email</li>
+        <li><span class="check">✓</span>Save the university emergency number: 020 7911 5000</li>
+      </ul>
+    </div>
+
+    <!-- KEY CONTACTS -->
+    <div class="section">
+      <div class="section-title">📞 Key Contacts</div>
+      <div class="section-sub">Save these for when you need them</div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <span class="icon">🎓</span>
+          <h4>Student Centre</h4>
+          <p>General student enquiries, ID cards, enrolment</p>
+          <a href="https://www.westminster.ac.uk/study/current-students/student-centre" target="_blank">Visit website ↗</a>
+        </div>
+        <div class="contact-card">
+          <span class="icon">🧠</span>
+          <h4>Student Wellbeing</h4>
+          <p>Mental health, counselling and support services</p>
+          <a href="https://www.westminster.ac.uk/study/current-students/support-and-facilities/student-wellbeing" target="_blank">Get support ↗</a>
+        </div>
+        <div class="contact-card">
+          <span class="icon">💼</span>
+          <h4>Careers Service</h4>
+          <p>CV help, job applications and career guidance</p>
+          <a href="https://www.westminster.ac.uk/study/current-students/careers-and-employability" target="_blank">Visit careers ↗</a>
+        </div>
+        <div class="contact-card">
+          <span class="icon">🏛️</span>
+          <h4>Students Union</h4>
+          <p>Societies, events, student representation and support</p>
+          <a href="https://www.uwsu.com" target="_blank">Visit UWSU ↗</a>
+        </div>
+        <div class="contact-card">
+          <span class="icon">📚</span>
+          <h4>University Library</h4>
+          <p>Books, journals, study spaces and research support</p>
+          <a href="https://www.westminster.ac.uk/study/current-students/resources/libraries" target="_blank">Library portal ↗</a>
+        </div>
+        <div class="contact-card">
+          <span class="icon">🚨</span>
+          <h4>Campus Security</h4>
+          <p>24/7 emergency line for on-campus incidents</p>
+          <a href="tel:02079115000">020 7911 5000</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const token=localStorage.getItem("token");
+    const user=(()=>{try{return JSON.parse(localStorage.getItem("user")||"null")}catch{return null}})();
+    if(!token||!user){window.location.href="/login";}
+    document.getElementById("btnLogout").addEventListener("click",()=>{localStorage.clear();window.location.href="/login";});
+  </script>
+</body>
+</html>

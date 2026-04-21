@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Noticeboard – Uni-Connect Westminster</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--p:#7c3aed;--pd:#5b21b6;--bg:#f8fafc;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--shadow:0 4px 24px rgba(0,0,0,.06);--r:16px}
+    body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+    nav{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;text-decoration:none;color:var(--text)}
+    .logo-icon{width:36px;height:36px;background:var(--p);border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px}
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .user-chip{background:#f1f5f9;border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;color:var(--muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .btn{padding:9px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text);font-family:inherit;transition:.2s;text-decoration:none;display:inline-block}
+    .btn:hover{background:#f1f5f9}
+    .btn-p{background:var(--p);color:#fff;border-color:transparent}
+    .btn-p:hover{background:var(--pd)}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 24px}
+    .layout{display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start}
+    @media(max-width:860px){.layout{grid-template-columns:1fr}}
+    .page-header{margin-bottom:24px}
+    .page-header h1{font-size:26px;font-weight:900;margin-bottom:6px}
+    .page-header p{color:var(--muted);font-size:14px}
+
+    /* POST FORM */
+    .form-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:24px;box-shadow:var(--shadow);position:sticky;top:80px}
+    .form-card h2{font-size:17px;font-weight:900;margin-bottom:4px}
+    .form-card p{font-size:13px;color:var(--muted);margin-bottom:20px}
+    .form-group{margin-bottom:14px}
+    label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--text)}
+    input,select,textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;font-family:inherit;color:var(--text);background:#fff;transition:.2s}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+    textarea{resize:vertical;min-height:80px}
+    .char-count{font-size:11px;color:var(--muted);text-align:right;margin-top:4px}
+    .submit-btn{width:100%;padding:13px;border:none;border-radius:12px;background:var(--p);color:#fff;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:.2s;margin-top:4px}
+    .submit-btn:hover{background:var(--pd)}
+    .form-msg{font-size:13px;font-weight:600;margin-top:10px;padding:10px 14px;border-radius:10px;display:none}
+    .form-msg.success{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
+    .form-msg.error{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+
+    /* NOTICES */
+    .notices-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+    .notices-header h2{font-size:17px;font-weight:900}
+    .filters{display:flex;gap:8px;flex-wrap:wrap}
+    .fpill{padding:7px 14px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--muted);font-family:inherit;transition:.2s}
+    .fpill:hover{border-color:var(--p);color:var(--p)}
+    .fpill.active{border-color:var(--p);color:var(--p);background:#f3f0ff}
+    .notices-list{display:flex;flex-direction:column;gap:14px}
+    .notice-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);transition:.2s}
+    .notice-card:hover{transform:translateY(-1px);border-color:rgba(124,58,237,.3)}
+    .notice-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
+    .notice-title{font-size:16px;font-weight:800}
+    .notice-cat{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;flex-shrink:0}
+    .cat-General{background:#f1f5f9;color:var(--muted)}
+    .cat-Flatmate{background:#f0fdf4;color:#16a34a}
+    .cat-Textbooks{background:#fef9c3;color:#ca8a04}
+    .cat-Events{background:#f3f0ff;color:var(--p)}
+    .cat-Lost{background:#fef2f2;color:#dc2626}
+    .cat-Other{background:#f1f5f9;color:var(--muted)}
+    .notice-msg{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+    .notice-footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+    .notice-meta{font-size:12px;color:var(--muted)}
+    .notice-actions{display:flex;gap:8px;align-items:center}
+    .contact-btn{font-size:12px;font-weight:700;color:var(--p);background:#f3f0ff;padding:6px 12px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;font-family:inherit}
+    .contact-btn:hover{background:#ede9fe}
+    .delete-btn{font-size:12px;font-weight:700;color:#dc2626;background:#fef2f2;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;font-family:inherit}
+    .delete-btn:hover{background:#fee2e2}
+    .empty{background:#fff;border:1.5px dashed var(--border);border-radius:var(--r);padding:32px;text-align:center;color:var(--muted)}
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:12px 22px;border-radius:14px;font-weight:700;font-size:14px;display:none;z-index:9999}
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="/dashboard"><div class="logo-icon">U</div>Uni-Connect Westminster</a>
+    <div class="nav-right">
+      <span class="user-chip" id="userChip">Loading…</span>
+      <a class="btn" href="/dashboard">Dashboard</a>
+      <button class="btn" id="btnLogout">Logout</button>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="page-header">
+      <h1>📋 Student Noticeboard</h1>
+      <p>Post messages for fellow Westminster students — find flatmates, sell textbooks, share events and more.</p>
+    </div>
+
+    <div class="layout">
+
+      <!-- POST FORM -->
+      <div class="form-card">
+        <h2>📝 Post a Notice</h2>
+        <p>Visible to all Westminster students on this platform.</p>
+
+        <div class="form-group">
+          <label>Title</label>
+          <input id="fTitle" type="text" placeholder="e.g. Looking for a flatmate in Paddington" maxlength="100"/>
+          <div class="char-count" id="titleCount">0/100</div>
+        </div>
+
+        <div class="form-group">
+          <label>Category</label>
+          <select id="fCat">
+            <option value="General">General</option>
+            <option value="Flatmate">Flatmate Finder</option>
+            <option value="Textbooks">Textbooks</option>
+            <option value="Events">Events</option>
+            <option value="Lost & Found">Lost & Found</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="fMsg" placeholder="Describe what you're looking for or offering…" maxlength="500"></textarea>
+          <div class="char-count" id="msgCount">0/500</div>
+        </div>
+
+        <div class="form-group">
+          <label>Contact Email</label>
+          <input id="fEmail" type="email" placeholder="Your email so students can reach you"/>
+        </div>
+
+        <button class="submit-btn" onclick="postNotice()">Post Notice →</button>
+        <div class="form-msg" id="formMsg"></div>
+      </div>
+
+      <!-- NOTICES LIST -->
+      <div>
+        <div class="notices-header">
+          <h2>Latest Notices</h2>
+          <div class="filters">
+            <button class="fpill active" data-f="all">All</button>
+            <button class="fpill" data-f="Flatmate">Flatmate</button>
+            <button class="fpill" data-f="Textbooks">Textbooks</button>
+            <button class="fpill" data-f="Events">Events</button>
+            <button class="fpill" data-f="Lost & Found">Lost & Found</button>
+          </div>
+        </div>
+        <div class="notices-list" id="noticesList">
+          <div class="empty">Loading notices…</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const token=localStorage.getItem("token");
+    const user=(()=>{try{return JSON.parse(localStorage.getItem("user")||"null")}catch{return null}})();
+    if(!token||!user){window.location.href="/login";}
+    document.getElementById("userChip").textContent=user?.email||"Logged in";
+    document.getElementById("btnLogout").addEventListener("click",()=>{localStorage.clear();window.location.href="/login";});
+    const authH=()=>({"Content-Type":"application/json","Authorization":`Bearer ${token}`});
+
+    let notices=[],activeFilter="all";
+
+    // CHAR COUNTS
+    document.getElementById("fTitle").addEventListener("input",e=>{
+      document.getElementById("titleCount").textContent=`${e.target.value.length}/100`;
+    });
+    document.getElementById("fMsg").addEventListener("input",e=>{
+      document.getElementById("msgCount").textContent=`${e.target.value.length}/500`;
+    });
+
+    // FILTERS
+    document.querySelectorAll(".fpill").forEach(p=>{
+      p.addEventListener("click",()=>{
+        document.querySelectorAll(".fpill").forEach(x=>x.classList.remove("active"));
+        p.classList.add("active");
+        activeFilter=p.dataset.f;
+        render();
+      });
+    });
+
+    function esc(s){return(s||"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+    function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",2000);}
+    function timeAgo(date){
+      const diff=Math.floor((Date.now()-new Date(date))/1000);
+      if(diff<60)return"just now";
+      if(diff<3600)return`${Math.floor(diff/60)}m ago`;
+      if(diff<86400)return`${Math.floor(diff/3600)}h ago`;
+      return`${Math.floor(diff/86400)}d ago`;
+    }
+
+    function getCatClass(cat){
+      if(cat==="Flatmate")return"cat-Flatmate";
+      if(cat==="Textbooks")return"cat-Textbooks";
+      if(cat==="Events")return"cat-Events";
+      if(cat==="Lost & Found")return"cat-Lost";
+      return"cat-General";
+    }
+
+    function render(){
+      const list=document.getElementById("noticesList");
+      const filtered=activeFilter==="all"?notices:notices.filter(n=>n.category===activeFilter);
+      if(!filtered.length){
+        list.innerHTML=`<div class="empty">${activeFilter==="all"?"No notices yet — be the first to post!":"No notices in this category yet."}</div>`;
+        return;
+      }
+      list.innerHTML=filtered.map(n=>`
+        <div class="notice-card" id="notice-${n._id}">
+          <div class="notice-top">
+            <div class="notice-title">${esc(n.title)}</div>
+            <span class="notice-cat ${getCatClass(n.category)}">${esc(n.category)}</span>
+          </div>
+          <div class="notice-msg">${esc(n.message)}</div>
+          <div class="notice-footer">
+            <span class="notice-meta">Posted ${timeAgo(n.createdAt)}</span>
+            <div class="notice-actions">
+              <a href="mailto:${esc(n.contactEmail)}?subject=Re: ${esc(n.title)}" class="contact-btn">✉️ Contact</a>
+              ${n.authorEmail===req?`<button class="delete-btn" onclick="deleteNotice('${n._id}')">Delete</button>`:""}
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function loadNotices(){
+      try{
+        const res=await fetch("/api/noticeboard",{headers:authH()});
+        if(!res.ok)throw new Error();
+        notices=await res.json();
+        render();
+      }catch{
+        document.getElementById("noticesList").innerHTML=`<div class="empty">Failed to load notices.</div>`;
+      }
+    }
+
+    async function postNotice(){
+      const title=document.getElementById("fTitle").value.trim();
+      const message=document.getElementById("fMsg").value.trim();
+      const category=document.getElementById("fCat").value;
+      const contactEmail=document.getElementById("fEmail").value.trim();
+      const msg=document.getElementById("formMsg");
+
+      msg.style.display="none";
+      if(!title||!message||!contactEmail){
+        msg.textContent="Please fill in all fields.";
+        msg.className="form-msg error";
+        msg.style.display="block";
+        return;
+      }
+
+      try{
+        const res=await fetch("/api/noticeboard",{method:"POST",headers:authH(),body:JSON.stringify({title,message,category,contactEmail})});
+        const data=await res.json();
+        if(!res.ok){msg.textContent=data.message||"Failed to post";msg.className="form-msg error";msg.style.display="block";return;}
+        msg.textContent="✅ Notice posted successfully!";
+        msg.className="form-msg success";
+        msg.style.display="block";
+        document.getElementById("fTitle").value="";
+        document.getElementById("fMsg").value="";
+        document.getElementById("fEmail").value="";
+        document.getElementById("titleCount").textContent="0/100";
+        document.getElementById("msgCount").textContent="0/500";
+        notices.unshift(data);
+        render();
+        showToast("✅ Notice posted!");
+        setTimeout(()=>msg.style.display="none",3000);
+      }catch{
+        msg.textContent="Failed to post notice.";
+        msg.className="form-msg error";
+        msg.style.display="block";
+      }
+    }
+
+    async function deleteNotice(id){
+      if(!confirm("Delete this notice?"))return;
+      try{
+        await fetch(`/api/noticeboard/${id}`,{method:"DELETE",headers:authH()});
+        notices=notices.filter(n=>n._id!==id);
+        render();
+        showToast("Deleted ✓");
+      }catch{alert("Failed to delete.");}
+    }
+
+    const req=user?.email||"";
+    loadNotices();
+  </script>
+</body>
+</html>

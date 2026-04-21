@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Jobs – Uni-Connect Westminster</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--p:#7c3aed;--pd:#5b21b6;--bg:#f8fafc;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--shadow:0 4px 24px rgba(0,0,0,.06);--r:16px}
+    body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+    nav{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;text-decoration:none;color:var(--text)}
+    .logo-icon{width:36px;height:36px;background:var(--p);border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px}
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .user-chip{background:#f1f5f9;border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;color:var(--muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .btn{padding:9px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text);font-family:inherit;transition:.2s;text-decoration:none;display:inline-block}
+    .btn:hover{background:#f1f5f9}
+    .btn-p{background:var(--p);color:#fff;border-color:transparent}
+    .btn-p:hover{background:var(--pd)}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 24px}
+    .page-header{margin-bottom:24px}
+    .page-header h1{font-size:26px;font-weight:900;margin-bottom:6px}
+    .page-header p{color:var(--muted);font-size:14px}
+    .api-badge{display:inline-flex;align-items:center;gap:6px;background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;margin-top:8px}
+    .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
+    .search-wrap{flex:1;min-width:240px;position:relative}
+    .search-wrap input{width:100%;padding:11px 14px 11px 40px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;font-family:inherit;background:#fff;color:var(--text)}
+    .search-wrap input:focus{outline:none;border-color:var(--p)}
+    .search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px}
+    .filters{display:flex;gap:8px;flex-wrap:wrap}
+    .fpill{padding:8px 16px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--muted);font-family:inherit;transition:.2s}
+    .fpill:hover{border-color:var(--p);color:var(--p)}
+    .fpill.active{border-color:var(--p);color:var(--p);background:#f3f0ff}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}}
+    .card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;cursor:pointer;transition:.2s}
+    .card:hover{transform:translateY(-2px);border-color:rgba(124,58,237,.5);box-shadow:0 8px 32px rgba(124,58,237,.1)}
+    .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px}
+    .card-title{font-size:16px;font-weight:800;color:var(--text)}
+    .card-meta{font-size:13px;color:var(--muted);margin-top:3px}
+    .live-badge{font-size:10px;font-weight:700;background:#f0fdf4;color:#16a34a;padding:3px 8px;border-radius:999px;border:1px solid #bbf7d0;white-space:nowrap;flex-shrink:0}
+    .card-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:14px}
+    .card-footer{display:flex;justify-content:space-between;align-items:center}
+    .salary{font-size:15px;font-weight:800;color:#16a34a}
+    .card-action{font-size:12px;font-weight:700;color:var(--p);background:#f3f0ff;padding:6px 12px;border-radius:8px}
+    .empty{background:#fff;border:1.5px dashed var(--border);border-radius:var(--r);padding:32px;text-align:center;color:var(--muted);margin-top:8px}
+    .overlay{position:fixed;inset:0;background:rgba(15,23,42,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:999;backdrop-filter:blur(4px)}
+    .overlay.open{display:flex}
+    .modal{background:#fff;border-radius:24px;width:min(680px,100%);max-height:90vh;overflow-y:auto;box-shadow:0 25px 80px rgba(0,0,0,.2)}
+    .modal-head{padding:24px 24px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .modal-head h2{font-size:20px;font-weight:900}
+    .modal-head .meta{font-size:13px;color:var(--muted);margin-top:4px}
+    .close-x{width:36px;height:36px;border:none;background:#f1f5f9;border-radius:10px;cursor:pointer;font-size:16px;flex-shrink:0;font-weight:900}
+    .modal-body{padding:20px 24px}
+    .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+    @media(max-width:500px){.modal-grid{grid-template-columns:1fr}}
+    .kv{background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:12px}
+    .kv-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+    .kv-val{font-size:14px;font-weight:700;color:var(--text)}
+    .modal-desc-title{font-size:14px;font-weight:700;margin-bottom:8px}
+    .modal-desc-text{font-size:14px;color:var(--muted);line-height:1.65}
+    .modal-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .modal-msg{font-size:13px;color:var(--muted)}
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:12px 22px;border-radius:14px;font-weight:700;font-size:14px;display:none;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.3)}
+    .count-label{font-size:13px;color:var(--muted);margin-bottom:12px;font-weight:600}
+    .pagination{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:24px;flex-wrap:wrap}
+    .page-btn{padding:8px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:#fff;font-family:inherit;transition:.2s}
+    .page-btn:hover{border-color:var(--p);color:var(--p)}
+    .page-btn.active{background:var(--p);color:#fff;border-color:var(--p)}
+    .page-btn:disabled{opacity:.4;cursor:not-allowed}
+    .skeleton{background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;height:16px;margin-bottom:8px}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="/dashboard"><div class="logo-icon">U</div>Uni-Connect Westminster</a>
+    <div class="nav-right">
+      <span class="user-chip" id="userChip">Loading…</span>
+      <a class="btn btn-p" href="/saved">⭐ Saved</a>
+      <a class="btn" href="/dashboard">Dashboard</a>
+      <button class="btn" id="btnLogout">Logout</button>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="page-header">
+      <h1>💼 Student Jobs Finder</h1>
+      <p>Browse real live part-time jobs and internships near Westminster.</p>
+      <span class="api-badge">🟢 Live data powered by Adzuna API</span>
+    </div>
+
+    <div class="controls">
+      <div class="search-wrap">
+        <span class="search-icon">🔎</span>
+        <input id="searchInput" type="text" placeholder="Search role, company, keyword…"/>
+      </div>
+      <div class="filters">
+        <button class="fpill active" data-q="part time london">All Jobs</button>
+        <button class="fpill" data-q="retail part time london">Retail</button>
+        <button class="fpill" data-q="hospitality part time london">Hospitality</button>
+        <button class="fpill" data-q="tech internship london">Tech Intern</button>
+        <button class="fpill" data-q="remote part time london">Remote</button>
+        <button class="fpill" data-q="warehouse logistics part time london">Warehouse</button>
+      </div>
+    </div>
+
+    <div class="count-label" id="countLabel"></div>
+    <div class="empty" id="emptyMsg" style="display:none">Loading jobs…</div>
+    <div class="grid" id="jobGrid"></div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <h2 id="mTitle">—</h2>
+          <div class="meta" id="mMeta">—</div>
+        </div>
+        <button class="close-x" id="closeBtn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-grid">
+          <div class="kv"><div class="kv-label">Salary</div><div class="kv-val" id="mSalary">—</div></div>
+          <div class="kv"><div class="kv-label">Type</div><div class="kv-val" id="mType">—</div></div>
+          <div class="kv"><div class="kv-label">Location</div><div class="kv-val" id="mLocation">—</div></div>
+          <div class="kv"><div class="kv-label">Source</div><div class="kv-val">🟢 Adzuna Live API</div></div>
+        </div>
+        <div class="modal-desc-title">About this role</div>
+        <div class="modal-desc-text" id="mDesc">—</div>
+      </div>
+      <div class="modal-foot">
+        <span class="modal-msg" id="modalMsg"></span>
+        <div style="display:flex;gap:10px">
+          <button class="btn" id="closeBtn2">Close</button>
+          <a id="applyBtn" href="#" target="_blank" class="btn btn-p">Apply Now ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">⭐ Saved!</div>
+
+  <script>
+    const token=localStorage.getItem("token");
+    const user=(()=>{try{return JSON.parse(localStorage.getItem("user")||"null")}catch{return null}})();
+    if(!token||!user){window.location.href="/login";}
+    document.getElementById("userChip").textContent=user?.email||"Logged in";
+    document.getElementById("btnLogout").addEventListener("click",()=>{localStorage.clear();window.location.href="/login";});
+    const authH=()=>({"Content-Type":"application/json","Authorization":`Bearer ${token}`});
+
+    let currentQuery="part time london";
+    let currentPage=1;
+    let totalJobs=0;
+    let activeJob=null;
+    let debounceTimer=null;
+
+    document.querySelectorAll(".fpill").forEach(p=>{
+      p.addEventListener("click",()=>{
+        document.querySelectorAll(".fpill").forEach(x=>x.classList.remove("active"));
+        p.classList.add("active");
+        currentQuery=p.dataset.q;
+        currentPage=1;
+        document.getElementById("searchInput").value="";
+        load();
+      });
+    });
+
+    document.getElementById("searchInput").addEventListener("input",e=>{
+      clearTimeout(debounceTimer);
+      debounceTimer=setTimeout(()=>{
+        const q=e.target.value.trim();
+        if(q.length>2){
+          currentQuery=q+" london";
+          currentPage=1;
+          load();
+        }else if(q.length===0){
+          currentQuery="part time london";
+          currentPage=1;
+          load();
+        }
+      },600);
+    });
+
+    const overlay=document.getElementById("overlay");
+    function openModal(job){
+      activeJob=job;
+      document.getElementById("mTitle").textContent=job.title||"—";
+      document.getElementById("mMeta").textContent=`${job.company||"—"} • ${job.location||"—"}`;
+      document.getElementById("mSalary").textContent=job.salary||"Competitive";
+      document.getElementById("mType").textContent=job.type||"Part-time";
+      document.getElementById("mLocation").textContent=job.location||"—";
+      document.getElementById("mDesc").textContent=job.description||"No description.";
+      document.getElementById("applyBtn").href=job.applyUrl||"#";
+      document.getElementById("modalMsg").textContent="";
+      overlay.classList.add("open");
+    }
+    function closeModal(){overlay.classList.remove("open");activeJob=null;}
+    document.getElementById("closeBtn").addEventListener("click",closeModal);
+    document.getElementById("closeBtn2").addEventListener("click",closeModal);
+    overlay.addEventListener("click",e=>{if(e.target===overlay)closeModal();});
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+
+    function showSkeletons(){
+      const grid=document.getElementById("jobGrid");
+      grid.innerHTML=Array(6).fill(`
+        <div class="card" style="cursor:default">
+          <div class="skeleton" style="width:60%;height:20px"></div>
+          <div class="skeleton" style="width:40%;height:14px;margin-top:12px"></div>
+          <div class="skeleton" style="width:100%;height:14px;margin-top:16px"></div>
+          <div class="skeleton" style="width:80%;height:14px"></div>
+          <div class="skeleton" style="width:30%;height:20px;margin-top:16px"></div>
+        </div>
+      `).join("");
+    }
+
+    function esc(s){return(s||"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+    function render(jobs){
+      const grid=document.getElementById("jobGrid");
+      const empty=document.getElementById("emptyMsg");
+      const count=document.getElementById("countLabel");
+      grid.innerHTML="";
+      if(!jobs.length){
+        empty.style.display="block";
+        empty.textContent="No jobs found. Try a different search.";
+        count.textContent="";
+        return;
+      }
+      empty.style.display="none";
+      count.textContent=`Showing ${jobs.length} of ${totalJobs.toLocaleString()} live jobs`;
+      jobs.forEach(job=>{
+        const card=document.createElement("div");
+        card.className="card";
+        card.innerHTML=`
+          <div class="card-top">
+            <div>
+              <div class="card-title">${esc(job.title)}</div>
+              <div class="card-meta">${esc(job.company)} • ${esc(job.location)}</div>
+            </div>
+            <span class="live-badge">🟢 Live</span>
+          </div>
+          <div class="card-desc">${esc((job.description||"").slice(0,120))}…</div>
+          <div class="card-footer">
+            <span class="salary">${esc(job.salary||"Competitive")}</span>
+            <span class="card-action">View details →</span>
+          </div>
+        `;
+        card.addEventListener("click",()=>openModal(job));
+        grid.appendChild(card);
+      });
+    }
+
+    function renderPagination(){
+      const pagination=document.getElementById("pagination");
+      const totalPages=Math.ceil(totalJobs/20);
+      if(totalPages<=1){pagination.innerHTML="";return;}
+      let html="";
+      html+=`<button class="page-btn" ${currentPage===1?"disabled":""} onclick="changePage(${currentPage-1})">← Prev</button>`;
+      const start=Math.max(1,currentPage-2);
+      const end=Math.min(totalPages,currentPage+2);
+      for(let i=start;i<=end;i++){
+        html+=`<button class="page-btn ${i===currentPage?"active":""}" onclick="changePage(${i})">${i}</button>`;
+      }
+      html+=`<button class="page-btn" ${currentPage===totalPages?"disabled":""} onclick="changePage(${currentPage+1})">Next →</button>`;
+      pagination.innerHTML=html;
+    }
+
+    function changePage(page){
+      currentPage=page;
+      load();
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    async function load(){
+      showSkeletons();
+      document.getElementById("emptyMsg").style.display="none";
+      document.getElementById("countLabel").textContent="Fetching live jobs…";
+      document.getElementById("pagination").innerHTML="";
+      try{
+        const res=await fetch(`/api/adzuna-jobs?what=${encodeURIComponent(currentQuery)}&where=London&page=${currentPage}`,{headers:authH()});
+        if(!res.ok)throw new Error("Failed");
+        const data=await res.json();
+        totalJobs=data.total||0;
+        render(data.jobs||[]);
+        renderPagination();
+      }catch{
+        document.getElementById("emptyMsg").style.display="block";
+        document.getElementById("emptyMsg").textContent="Failed to load jobs. Make sure server is running.";
+        document.getElementById("jobGrid").innerHTML="";
+        document.getElementById("countLabel").textContent="";
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>

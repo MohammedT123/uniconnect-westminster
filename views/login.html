@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Login – Uni-Connect Westminster</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--p:#7c3aed;--pd:#5b21b6;--bg:#f8fafc;--text:#0f172a;--muted:#64748b;--border:#e2e8f0}
+    body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);min-height:100vh;display:flex;flex-direction:column}
+    nav{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;color:var(--text);text-decoration:none}
+    .logo-icon{width:32px;height:32px;background:var(--p);border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:14px}
+    .main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+    .card{background:#fff;border:1px solid var(--border);border-radius:24px;padding:40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.07)}
+    .card-icon{width:52px;height:52px;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:16px;display:grid;place-items:center;font-size:22px;margin-bottom:20px}
+    h1{font-size:22px;font-weight:800;color:var(--text);margin-bottom:6px}
+    .sub{color:var(--muted);font-size:14px;margin-bottom:28px}
+    .group{margin-bottom:16px}
+    label{display:block;font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}
+    input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;font-family:inherit;color:var(--text);transition:.2s;background:#fff}
+    input:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+    .btn{width:100%;padding:13px;border:none;border-radius:12px;background:var(--p);color:#fff;font-size:15px;font-weight:800;cursor:pointer;transition:.2s;font-family:inherit;margin-top:4px}
+    .btn:hover{background:var(--pd);transform:translateY(-1px)}
+    .err{background:#fef2f2;border:1px solid #fecaca;color:#dc2626;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;margin-top:12px;display:none}
+    .footer-link{text-align:center;margin-top:20px;font-size:13px;color:var(--muted)}
+    .footer-link a{color:var(--p);font-weight:700;text-decoration:none}
+    .divider{height:1px;background:var(--border);margin:20px 0}
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="/"><div class="logo-icon">U</div>Uni-Connect Westminster</a>
+  </nav>
+  <div class="main">
+    <div class="card">
+      <div class="card-icon">🎓</div>
+      <h1>Welcome back</h1>
+      <p class="sub">Sign in with your Westminster account</p>
+      <form id="loginForm">
+        <div class="group">
+          <label>University Email</label>
+          <input id="email" type="email" placeholder="name@westminster.ac.uk" required autocomplete="email"/>
+        </div>
+        <div class="group">
+          <label>Password</label>
+          <input id="password" type="password" placeholder="Enter your password" required autocomplete="current-password"/>
+        </div>
+        <button class="btn" type="submit">Sign in →</button>
+        <div class="err" id="errMsg"></div>
+      </form>
+      <div class="divider"></div>
+      <div class="footer-link">Don't have an account? <a href="/register">Create one</a></div>
+    </div>
+  </div>
+  <script>
+    if(localStorage.getItem("token")) window.location.href="/dashboard";
+    document.getElementById("loginForm").addEventListener("submit",async(e)=>{
+      e.preventDefault();
+      const err=document.getElementById("errMsg");
+      const btn=document.querySelector(".btn");
+      err.style.display="none";
+      btn.textContent="Signing in…";
+      btn.disabled=true;
+      try{
+        const res=await fetch("/api/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:document.getElementById("email").value.trim(),password:document.getElementById("password").value})});
+        const data=await res.json().catch(()=>({}));
+        if(!res.ok){err.textContent=data.message||"Login failed";err.style.display="block";btn.textContent="Sign in →";btn.disabled=false;return;}
+        localStorage.setItem("token",data.token);
+        localStorage.setItem("user",JSON.stringify(data.user));
+        window.location.href="/dashboard";
+      }catch{err.textContent="Network error. Is the server running?";err.style.display="block";btn.textContent="Sign in →";btn.disabled=false;}
+    });
+  </script>
+</body>
+</html>

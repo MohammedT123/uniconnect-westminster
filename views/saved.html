@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Saved – Uni-Connect Westminster</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--p:#7c3aed;--pd:#5b21b6;--bg:#f8fafc;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--shadow:0 4px 24px rgba(0,0,0,.06);--r:16px}
+    body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+    nav{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;text-decoration:none;color:var(--text)}
+    .logo-icon{width:36px;height:36px;background:var(--p);border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px}
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .user-chip{background:#f1f5f9;border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;color:var(--muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .btn{padding:9px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text);font-family:inherit;transition:.2s;text-decoration:none;display:inline-block}
+    .btn:hover{background:#f1f5f9}
+    .btn-p{background:var(--p);color:#fff;border-color:transparent}
+    .btn-p:hover{background:var(--pd)}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 24px}
+    .page-header{margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
+    .page-header h1{font-size:26px;font-weight:900;margin-bottom:6px}
+    .page-header p{color:var(--muted);font-size:14px}
+    .section{margin-bottom:32px}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .section-title{font-size:17px;font-weight:800;display:flex;align-items:center;gap:8px}
+    .section-count{font-size:13px;font-weight:600;color:var(--muted);background:#f1f5f9;padding:3px 10px;border-radius:999px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    @media(max-width:860px){.grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:540px){.grid{grid-template-columns:1fr}}
+    .card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);padding:18px;transition:.2s}
+    .card:hover{transform:translateY(-2px)}
+    .card-title{font-size:15px;font-weight:800;margin-bottom:4px}
+    .card-meta{font-size:13px;color:var(--muted);margin-bottom:10px}
+    .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+    .tag{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#f1f5f9;color:var(--muted)}
+    .tag-green{background:#f0fdf4;color:#16a34a}
+    .unsave-btn{font-size:12px;font-weight:700;padding:6px 12px;border-radius:8px;cursor:pointer;border:1.5px solid #fecaca;background:#fef2f2;color:#dc2626;font-family:inherit;transition:.2s}
+    .unsave-btn:hover{background:#fee2e2}
+    .empty-section{background:#fff;border:1.5px dashed var(--border);border-radius:var(--r);padding:24px;text-align:center;color:var(--muted);font-size:14px}
+    .empty-section a{color:var(--p);font-weight:700;text-decoration:none}
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:12px 22px;border-radius:14px;font-weight:700;font-size:14px;display:none;z-index:9999}
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="/dashboard"><div class="logo-icon">U</div>Uni-Connect Westminster</a>
+    <div class="nav-right">
+      <span class="user-chip" id="userChip">Loading…</span>
+      <a class="btn" href="/dashboard">Dashboard</a>
+      <button class="btn" id="btnLogout">Logout</button>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="page-header">
+      <div>
+        <h1>⭐ Saved Items</h1>
+        <p>Everything you've saved — jobs, accommodation and communities.</p>
+      </div>
+      <button class="btn btn-p" id="btnRefresh">Refresh</button>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-title">💼 Saved Jobs <span class="section-count" id="jobCount">0</span></div>
+        <a class="btn" href="/jobs">Browse more</a>
+      </div>
+      <div class="grid" id="jobGrid"></div>
+      <div class="empty-section" id="jobEmpty">No saved jobs yet. <a href="/jobs">Browse jobs →</a></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-title">🏠 Saved Accommodation <span class="section-count" id="accCount">0</span></div>
+        <a class="btn" href="/accommodation">Browse more</a>
+      </div>
+      <div class="grid" id="accGrid"></div>
+      <div class="empty-section" id="accEmpty">No saved accommodation yet. <a href="/accommodation">Browse listings →</a></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-title">👥 Saved Communities <span class="section-count" id="commCount">0</span></div>
+        <a class="btn" href="/communities">Browse more</a>
+      </div>
+      <div class="grid" id="commGrid"></div>
+      <div class="empty-section" id="commEmpty">No saved communities yet. <a href="/communities">Browse communities →</a></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Removed ✓</div>
+
+  <script>
+    const token=localStorage.getItem("token");
+    const user=(()=>{try{return JSON.parse(localStorage.getItem("user")||"null")}catch{return null}})();
+    if(!token||!user){window.location.href="/login";}
+    document.getElementById("userChip").textContent=user?.email||"Logged in";
+    document.getElementById("btnLogout").addEventListener("click",()=>{localStorage.clear();window.location.href="/login";});
+    const authH=()=>({"Content-Type":"application/json","Authorization":`Bearer ${token}`});
+
+    function esc(s){return(s||"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+    function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",1800);}
+
+    async function unsave(itemId,type,cardEl){
+      try{
+        await fetch("/api/unsave-item",{method:"POST",headers:authH(),body:JSON.stringify({itemId,type})});
+        cardEl.style.opacity="0";cardEl.style.transform="scale(0.95)";cardEl.style.transition=".2s";
+        setTimeout(()=>{cardEl.remove();showToast("Removed ✓");},200);
+      }catch{alert("Failed to remove.");}
+    }
+
+    function makeCard(item,type){
+      const card=document.createElement("div");
+      card.className="card";
+      let title="",meta="",tag1="",tag2="";
+      if(type==="job"){title=item.title||"Job";meta=`${item.company||""} • ${item.location||""}`;tag1=item.type||"Part-time";tag2=item.salary||"";}
+      if(type==="acc"){title=item.title||"Accommodation";meta=item.address||item.location||"";tag1=item.type||"Student";tag2=item.price?`£${item.price}/wk`:"";}
+      if(type==="community"){title=item.name||"Community";meta=item.category||"";tag1=item.members?`${item.members} members`:"Open to all";tag2=item.meetingSchedule||"";}
+      card.innerHTML=`
+        <div class="card-title">${esc(title)}</div>
+        <div class="card-meta">${esc(meta)}</div>
+        <div class="tags">
+          ${tag1?`<span class="tag tag-green">${esc(tag1)}</span>`:""}
+          ${tag2?`<span class="tag">${esc(tag2)}</span>`:""}
+        </div>
+        <button class="unsave-btn">Remove</button>
+      `;
+      card.querySelector(".unsave-btn").addEventListener("click",()=>unsave(item._id,type,card));
+      return card;
+    }
+
+    async function load(){
+      ["jobGrid","accGrid","commGrid"].forEach(id=>document.getElementById(id).innerHTML="");
+      ["jobEmpty","accEmpty","commEmpty"].forEach(id=>{document.getElementById(id).style.display="block";});
+      try{
+        const res=await fetch("/api/my-saved",{headers:authH()});
+        if(!res.ok)throw new Error();
+        const data=await res.json();
+        const jobs=data.jobs||[];
+        const acc=data.acc||[];
+        const comms=data.communities||[];
+
+        document.getElementById("jobCount").textContent=jobs.length;
+        document.getElementById("accCount").textContent=acc.length;
+        document.getElementById("commCount").textContent=comms.length;
+
+        const jobGrid=document.getElementById("jobGrid");
+        if(jobs.length){document.getElementById("jobEmpty").style.display="none";jobs.forEach(j=>jobGrid.appendChild(makeCard(j,"job")));}
+
+        const accGrid=document.getElementById("accGrid");
+        if(acc.length){document.getElementById("accEmpty").style.display="none";acc.forEach(a=>accGrid.appendChild(makeCard(a,"acc")));}
+
+        const commGrid=document.getElementById("commGrid");
+        if(comms.length){document.getElementById("commEmpty").style.display="none";comms.forEach(c=>commGrid.appendChild(makeCard(c,"community")));}
+      }catch{["jobEmpty","accEmpty","commEmpty"].forEach(id=>{document.getElementById(id).textContent="Failed to load saved items.";});}
+    }
+
+    document.getElementById("btnRefresh").addEventListener("click",load);
+    load();
+  </script>
+</body>
+</html>

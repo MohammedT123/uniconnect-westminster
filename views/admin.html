@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Admin Panel – Uni-Connect Westminster</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--p:#7c3aed;--pd:#5b21b6;--bg:#f8fafc;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--shadow:0 4px 24px rgba(0,0,0,.06);--r:16px}
+    body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+    nav{background:#0f172a;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:15px;text-decoration:none;color:#fff}
+    .logo-icon{width:36px;height:36px;background:var(--p);border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px}
+    .nav-badge{background:#dc2626;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px}
+    .btn{padding:9px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text);font-family:inherit;transition:.2s;text-decoration:none;display:inline-block}
+    .btn:hover{background:#f1f5f9}
+    .btn-p{background:var(--p);color:#fff;border-color:transparent}
+    .btn-p:hover{background:var(--pd)}
+    .btn-red{background:#dc2626;color:#fff;border-color:transparent}
+    .btn-red:hover{background:#b91c1c}
+    .btn-sm{padding:6px 12px;font-size:12px}
+    .wrap{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .page-header{margin-bottom:28px}
+    .page-header h1{font-size:26px;font-weight:900;margin-bottom:4px}
+    .page-header p{font-size:14px;color:var(--muted)}
+    /* TABS */
+    .tabs{display:flex;gap:4px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:6px;margin-bottom:28px;flex-wrap:wrap}
+    .tab{padding:10px 20px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;border:none;background:transparent;color:var(--muted);font-family:inherit;transition:.2s}
+    .tab.active{background:var(--p);color:#fff}
+    .tab:hover:not(.active){background:#f1f5f9;color:var(--text)}
+    .panel{display:none}
+    .panel.active{display:block}
+    /* STATS */
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+    @media(max-width:700px){.stats-grid{grid-template-columns:1fr 1fr}}
+    .stat-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:24px;text-align:center;box-shadow:var(--shadow)}
+    .stat-icon{font-size:28px;margin-bottom:10px;display:block}
+    .stat-num{font-size:32px;font-weight:900;color:var(--p);margin-bottom:4px}
+    .stat-label{font-size:13px;color:var(--muted);font-weight:600}
+    /* TABLES */
+    .table-wrap{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);margin-bottom:24px}
+    .table-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .table-head h3{font-size:16px;font-weight:800}
+    table{width:100%;border-collapse:collapse}
+    th{background:#f8fafc;padding:12px 16px;text-align:left;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+    td{padding:12px 16px;font-size:14px;border-bottom:1px solid var(--border);vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:#f8fafc}
+    .badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;display:inline-block}
+    .badge-green{background:#f0fdf4;color:#16a34a}
+    .badge-blue{background:#eff6ff;color:#2563eb}
+    .badge-purple{background:#f3f0ff;color:var(--p)}
+    .badge-amber{background:#fefce8;color:#ca8a04}
+    .badge-red{background:#fef2f2;color:#dc2626}
+    /* FORM */
+    .form-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);margin-bottom:24px}
+    .form-card h3{font-size:16px;font-weight:800;margin-bottom:16px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media(max-width:600px){.form-grid{grid-template-columns:1fr}}
+    .form-group{display:flex;flex-direction:column;gap:6px}
+    .form-group.full{grid-column:1/-1}
+    label{font-size:13px;font-weight:700;color:var(--text)}
+    input,select,textarea{padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;color:var(--text);background:#fff;transition:.2s}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--p)}
+    textarea{resize:vertical;min-height:80px}
+    .form-msg{font-size:13px;font-weight:600;padding:10px 14px;border-radius:10px;display:none;margin-top:12px}
+    .form-msg.success{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
+    .form-msg.error{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+    .empty{padding:32px;text-align:center;color:var(--muted);font-size:14px}
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:12px 22px;border-radius:14px;font-weight:700;font-size:14px;display:none;z-index:9999}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/dashboard">
+    <div class="logo-icon">U</div>
+    Uni-Connect Westminster
+  </a>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span class="nav-badge">ADMIN</span>
+    <a class="btn" href="/dashboard" style="background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)">Back to site</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-header">
+    <h1>🔐 Admin Panel</h1>
+    <p>Manage platform content, moderate notices and view registered students</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('overview',this)">📊 Overview</button>
+    <button class="tab" onclick="switchTab('accommodation',this)">🏠 Accommodation</button>
+    <button class="tab" onclick="switchTab('communities',this)">👥 Communities</button>
+    <button class="tab" onclick="switchTab('noticeboard',this)">📋 Noticeboard</button>
+    <button class="tab" onclick="switchTab('users',this)">👤 Users</button>
+  </div>
+
+  <!-- OVERVIEW PANEL -->
+  <div id="panel-overview" class="panel active">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-icon">👤</span>
+        <div class="stat-num" id="statUsers">—</div>
+        <div class="stat-label">Registered Students</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">🏠</span>
+        <div class="stat-num" id="statAcc">—</div>
+        <div class="stat-label">Accommodation Listings</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">👥</span>
+        <div class="stat-num" id="statComm">—</div>
+        <div class="stat-label">Communities</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">📋</span>
+        <div class="stat-num" id="statNotices">—</div>
+        <div class="stat-label">Active Notices</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-head">
+        <h3>Platform Summary</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Status</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Student Authentication</td><td><span class="badge badge-green">Active</span></td><td>Westminster email only (@westminster.ac.uk)</td></tr>
+          <tr><td>Live Job Listings</td><td><span class="badge badge-green">Active</span></td><td>Powered by Adzuna API</td></tr>
+          <tr><td>Accommodation Listings</td><td><span class="badge badge-green">Active</span></td><td>Curated student listings with provider links</td></tr>
+          <tr><td>Communities</td><td><span class="badge badge-green">Active</span></td><td>Student societies and clubs</td></tr>
+          <tr><td>Student Noticeboard</td><td><span class="badge badge-green">Active</span></td><td>With content moderation filter</td></tr>
+          <tr><td>Campus Map</td><td><span class="badge badge-green">Active</span></td><td>Westminster campuses and key locations</td></tr>
+          <tr><td>Student Services</td><td><span class="badge badge-green">Active</span></td><td>Links to Westminster student portal and services</td></tr>
+          <tr><td>Student Survival Guide</td><td><span class="badge badge-green">Active</span></td><td>Transport, banking, discounts and more</td></tr>
+          <tr><td>Content Moderation</td><td><span class="badge badge-green">Active</span></td><td>Banned words filter on noticeboard</td></tr>
+          <tr><td>Rate Limiting</td><td><span class="badge badge-green">Active</span></td><td>100 req/15min general, 10 req/15min auth</td></tr>
+          <tr><td>Security Headers</td><td><span class="badge badge-green">Active</span></td><td>Helmet.js — XSS, clickjacking protection</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCOMMODATION PANEL -->
+  <div id="panel-accommodation" class="panel">
+    <div class="form-card">
+      <h3>Add New Accommodation Listing</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Title</label>
+          <input id="accTitle" type="text" placeholder="e.g. Marylebone Student Village"/>
+        </div>
+        <div class="form-group">
+          <label>Address</label>
+          <input id="accAddress" type="text" placeholder="e.g. Marylebone Road, London"/>
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select id="accType">
+            <option value="Studio">Studio</option>
+            <option value="Shared">Shared</option>
+            <option value="En-suite">En-suite</option>
+            <option value="One Bedroom">One Bedroom</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Weekly Price (£)</label>
+          <input id="accPrice" type="number" placeholder="e.g. 280"/>
+        </div>
+        <div class="form-group">
+          <label>Distance from Campus</label>
+          <input id="accDistance" type="text" placeholder="e.g. 2 min walk"/>
+        </div>
+        <div class="form-group">
+          <label>Provider URL</label>
+          <input id="accUrl" type="text" placeholder="https://..."/>
+        </div>
+        <div class="form-group full">
+          <label>Description</label>
+          <textarea id="accDesc" placeholder="Describe the accommodation..."></textarea>
+        </div>
+      </div>
+      <button class="btn btn-p" style="margin-top:14px" onclick="addAccommodation()">Add Listing</button>
+      <div class="form-msg" id="accMsg"></div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-head">
+        <h3>All Accommodation Listings</h3>
+        <button class="btn btn-sm" onclick="loadAccommodation()">Refresh</button>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Title</th><th>Type</th><th>Price</th><th>Distance</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="accTable"><tr><td colspan="5" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- COMMUNITIES PANEL -->
+  <div id="panel-communities" class="panel">
+    <div class="form-card">
+      <h3>Add New Community</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Name</label>
+          <input id="commName" type="text" placeholder="e.g. Computer Science Society"/>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="commCategory">
+            <option value="Sports">Sports</option>
+            <option value="Arts">Arts</option>
+            <option value="Academic">Academic</option>
+            <option value="Cultural">Cultural</option>
+            <option value="Social">Social</option>
+            <option value="Tech">Tech</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Members</label>
+          <input id="commMembers" type="number" placeholder="e.g. 120"/>
+        </div>
+        <div class="form-group">
+          <label>Meeting Schedule</label>
+          <input id="commSchedule" type="text" placeholder="e.g. Wednesdays 5pm"/>
+        </div>
+        <div class="form-group">
+          <label>Contact Email</label>
+          <input id="commEmail" type="email" placeholder="e.g. society@westminster.ac.uk"/>
+        </div>
+        <div class="form-group full">
+          <label>Description</label>
+          <textarea id="commDesc" placeholder="Describe the community..."></textarea>
+        </div>
+      </div>
+      <button class="btn btn-p" style="margin-top:14px" onclick="addCommunity()">Add Community</button>
+      <div class="form-msg" id="commMsg"></div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-head">
+        <h3>All Communities</h3>
+        <button class="btn btn-sm" onclick="loadCommunities()">Refresh</button>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Category</th><th>Members</th><th>Schedule</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="commTable"><tr><td colspan="5" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- NOTICEBOARD PANEL -->
+  <div id="panel-noticeboard" class="panel">
+    <div class="table-wrap">
+      <div class="table-head">
+        <h3>All Student Notices</h3>
+        <button class="btn btn-sm" onclick="loadNotices()">Refresh</button>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Title</th><th>Category</th><th>Posted By</th><th>Contact</th><th>Date</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="noticeTable"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- USERS PANEL -->
+  <div id="panel-users" class="panel">
+    <div class="table-wrap">
+      <div class="table-head">
+        <h3>Registered Students</h3>
+        <button class="btn btn-sm" onclick="loadUsers()">Refresh</button>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Email</th><th>Saved Jobs</th><th>Saved Acc.</th><th>Saved Comms.</th><th>Joined</th></tr>
+        </thead>
+        <tbody id="usersTable"><tr><td colspan="5" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const ADMIN_KEY = "uniconnect_admin_2026";
+  const adminH = () => ({ "Content-Type": "application/json", "x-admin-key": ADMIN_KEY });
+  const token = localStorage.getItem("token");
+  const userH = () => ({ "Content-Type": "application/json", "Authorization": `Bearer ${token}` });
+
+  function showToast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.style.display="block"; setTimeout(()=>t.style.display="none",2000); }
+  function esc(s){ return (s||"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function timeAgo(date){ const d=Math.floor((Date.now()-new Date(date))/86400000); return d===0?"Today":d===1?"Yesterday":`${d} days ago`; }
+
+  function switchTab(name, btn){
+    document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    document.getElementById("panel-"+name).classList.add("active");
+    btn.classList.add("active");
+    if(name==="overview") loadOverview();
+    if(name==="accommodation") loadAccommodation();
+    if(name==="communities") loadCommunities();
+    if(name==="noticeboard") loadNotices();
+    if(name==="users") loadUsers();
+  }
+
+  async function loadOverview(){
+    try{
+      const [acc,comm,notices,users] = await Promise.all([
+        fetch("/api/accommodation",{headers:userH()}).then(r=>r.json()),
+        fetch("/api/communities",{headers:userH()}).then(r=>r.json()),
+        fetch("/api/noticeboard",{headers:userH()}).then(r=>r.json()),
+        fetch("/api/admin/users",{headers:adminH()}).then(r=>r.json()),
+      ]);
+      document.getElementById("statUsers").textContent=Array.isArray(users)?users.length:"—";
+      document.getElementById("statAcc").textContent=Array.isArray(acc)?acc.length:"—";
+      document.getElementById("statComm").textContent=Array.isArray(comm)?comm.length:"—";
+      document.getElementById("statNotices").textContent=Array.isArray(notices)?notices.length:"—";
+    }catch(e){ console.log(e); }
+  }
+
+  async function loadAccommodation(){
+    const tb=document.getElementById("accTable");
+    tb.innerHTML=`<tr><td colspan="5" class="empty">Loading...</td></tr>`;
+    try{
+      const res=await fetch("/api/admin/accommodation",{headers:adminH()});
+      const data=await res.json();
+      if(!data.length){tb.innerHTML=`<tr><td colspan="5" class="empty">No listings yet.</td></tr>`;return;}
+      tb.innerHTML=data.map(a=>`
+        <tr>
+          <td><strong>${esc(a.title)}</strong></td>
+          <td><span class="badge badge-purple">${esc(a.type)}</span></td>
+          <td>£${a.price}/wk</td>
+          <td>${esc(a.distanceFromCampus||"—")}</td>
+          <td><button class="btn btn-red btn-sm" onclick="deleteAcc('${a._id}')">Delete</button></td>
+        </tr>
+      `).join("");
+    }catch(e){ tb.innerHTML=`<tr><td colspan="5" class="empty">Failed to load.</td></tr>`; }
+  }
+
+  async function addAccommodation(){
+    const msg=document.getElementById("accMsg");
+    msg.style.display="none";
+    const body={
+      title:document.getElementById("accTitle").value.trim(),
+      address:document.getElementById("accAddress").value.trim(),
+      type:document.getElementById("accType").value,
+      price:Number(document.getElementById("accPrice").value),
+      description:document.getElementById("accDesc").value.trim(),
+      distanceFromCampus:document.getElementById("accDistance").value.trim(),
+      providerUrl:document.getElementById("accUrl").value.trim(),
+    };
+    if(!body.title||!body.address||!body.description){
+      msg.textContent="Please fill in all required fields.";
+      msg.className="form-msg error"; msg.style.display="block"; return;
+    }
+    try{
+      const res=await fetch("/api/admin/accommodation",{method:"POST",headers:adminH(),body:JSON.stringify(body)});
+      if(!res.ok) throw new Error();
+      msg.textContent="✅ Listing added successfully!";
+      msg.className="form-msg success"; msg.style.display="block";
+      loadAccommodation();
+      setTimeout(()=>msg.style.display="none",3000);
+    }catch{ msg.textContent="Failed to add listing."; msg.className="form-msg error"; msg.style.display="block"; }
+  }
+
+  async function deleteAcc(id){
+    if(!confirm("Delete this listing?")) return;
+    await fetch(`/api/admin/accommodation/${id}`,{method:"DELETE",headers:adminH()});
+    showToast("Deleted ✓"); loadAccommodation();
+  }
+
+  async function loadCommunities(){
+    const tb=document.getElementById("commTable");
+    tb.innerHTML=`<tr><td colspan="5" class="empty">Loading...</td></tr>`;
+    try{
+      const res=await fetch("/api/admin/communities",{headers:adminH()});
+      const data=await res.json();
+      if(!data.length){tb.innerHTML=`<tr><td colspan="5" class="empty">No communities yet.</td></tr>`;return;}
+      tb.innerHTML=data.map(c=>`
+        <tr>
+          <td><strong>${esc(c.name)}</strong></td>
+          <td><span class="badge badge-blue">${esc(c.category)}</span></td>
+          <td>${c.members||0}</td>
+          <td>${esc(c.meetingSchedule||"—")}</td>
+          <td><button class="btn btn-red btn-sm" onclick="deleteComm('${c._id}')">Delete</button></td>
+        </tr>
+      `).join("");
+    }catch(e){ tb.innerHTML=`<tr><td colspan="5" class="empty">Failed to load.</td></tr>`; }
+  }
+
+  async function addCommunity(){
+    const msg=document.getElementById("commMsg");
+    msg.style.display="none";
+    const body={
+      name:document.getElementById("commName").value.trim(),
+      category:document.getElementById("commCategory").value,
+      description:document.getElementById("commDesc").value.trim(),
+      members:Number(document.getElementById("commMembers").value)||0,
+      meetingSchedule:document.getElementById("commSchedule").value.trim(),
+      contactEmail:document.getElementById("commEmail").value.trim(),
+    };
+    if(!body.name||!body.description){
+      msg.textContent="Please fill in all required fields.";
+      msg.className="form-msg error"; msg.style.display="block"; return;
+    }
+    try{
+      const res=await fetch("/api/admin/communities",{method:"POST",headers:adminH(),body:JSON.stringify(body)});
+      if(!res.ok) throw new Error();
+      msg.textContent="✅ Community added successfully!";
+      msg.className="form-msg success"; msg.style.display="block";
+      loadCommunities();
+      setTimeout(()=>msg.style.display="none",3000);
+    }catch{ msg.textContent="Failed to add community."; msg.className="form-msg error"; msg.style.display="block"; }
+  }
+
+  async function deleteComm(id){
+    if(!confirm("Delete this community?")) return;
+    await fetch(`/api/admin/communities/${id}`,{method:"DELETE",headers:adminH()});
+    showToast("Deleted ✓"); loadCommunities();
+  }
+
+  async function loadNotices(){
+    const tb=document.getElementById("noticeTable");
+    tb.innerHTML=`<tr><td colspan="6" class="empty">Loading...</td></tr>`;
+    try{
+      const res=await fetch("/api/noticeboard",{headers:userH()});
+      const data=await res.json();
+      if(!data.length){tb.innerHTML=`<tr><td colspan="6" class="empty">No notices posted yet.</td></tr>`;return;}
+      tb.innerHTML=data.map(n=>`
+        <tr>
+          <td><strong>${esc(n.title)}</strong></td>
+          <td><span class="badge badge-amber">${esc(n.category)}</span></td>
+          <td>${esc(n.authorEmail||"—")}</td>
+          <td>${esc(n.contactEmail||"—")}</td>
+          <td>${timeAgo(n.createdAt)}</td>
+          <td><button class="btn btn-red btn-sm" onclick="deleteNotice('${n._id}')">Delete</button></td>
+        </tr>
+      `).join("");
+    }catch(e){ tb.innerHTML=`<tr><td colspan="6" class="empty">Failed to load.</td></tr>`; }
+  }
+
+  async function deleteNotice(id){
+    if(!confirm("Delete this notice?")) return;
+    try{
+      await fetch(`/api/noticeboard/${id}`,{method:"DELETE",headers:userH()});
+      showToast("Notice deleted ✓"); loadNotices();
+    }catch{ alert("Failed to delete."); }
+  }
+
+  async function loadUsers(){
+    const tb=document.getElementById("usersTable");
+    tb.innerHTML=`<tr><td colspan="5" class="empty">Loading...</td></tr>`;
+    try{
+      const res=await fetch("/api/admin/users",{headers:adminH()});
+      const data=await res.json();
+      if(!data.length){tb.innerHTML=`<tr><td colspan="5" class="empty">No users yet.</td></tr>`;return;}
+      tb.innerHTML=data.map(u=>`
+        <tr>
+          <td><strong>${esc(u.email)}</strong></td>
+          <td>${(u.savedJobs||[]).length}</td>
+          <td>${(u.savedAcc||[]).length}</td>
+          <td>${(u.savedCommunities||[]).length}</td>
+          <td>${timeAgo(u.createdAt)}</td>
+        </tr>
+      `).join("");
+    }catch(e){ tb.innerHTML=`<tr><td colspan="5" class="empty">Failed to load users.</td></tr>`; }
+  }
+
+  loadOverview();
+</script>
+</body>
+</html>
