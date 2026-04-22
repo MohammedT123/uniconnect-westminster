@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Student Support – Uni-Connect Westminster</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--p:#7c3aed;--bg:#f8fafc;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--r:16px}
+    body{font-family:Inter,-apple-system,sans-serif;background:var(--bg);color:var(--text)}
+    nav{background:#fff;border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;text-decoration:none;color:var(--text)}
+    .logo-icon{width:36px;height:36px;background:var(--p);border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px}
+    .btn{padding:9px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text);font-family:inherit;transition:.2s;text-decoration:none;display:inline-block}
+    .btn:hover{background:#f1f5f9}
+    .wrap{max-width:1100px;margin:0 auto;padding:36px 24px}
+    .hero{background:linear-gradient(135deg,#4c1d95,#7c3aed,#a855f7);border-radius:24px;padding:40px;color:#fff;margin-bottom:36px;position:relative;overflow:hidden}
+    .hero::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:rgba(255,255,255,.07);border-radius:50%}
+    .hero h1{font-size:28px;font-weight:900;margin-bottom:8px;position:relative}
+    .hero p{font-size:15px;opacity:.85;max-width:560px;line-height:1.6;position:relative}
+    .emergency-box{background:#fef2f2;border:1px solid #fecaca;border-radius:14px;padding:20px 24px;margin-bottom:28px;display:flex;gap:14px;align-items:flex-start}
+    .emergency-icon{font-size:24px;flex-shrink:0}
+    .emergency-box h4{font-size:14px;font-weight:800;color:#dc2626;margin-bottom:4px}
+    .emergency-box p{font-size:13px;color:#64748b;line-height:1.5}
+    .section{margin-bottom:36px}
+    .section-title{font-size:19px;font-weight:900;margin-bottom:4px;padding-bottom:10px;border-bottom:2px solid var(--border)}
+    .section-sub{font-size:13px;color:var(--muted);margin-bottom:18px;margin-top:6px}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}}
+    .card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+    .card-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .card-icon{font-size:28px;flex-shrink:0}
+    .card-title{font-size:16px;font-weight:800;color:var(--text)}
+    .card-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+    .contact-list{display:flex;flex-direction:column;gap:6px}
+    .contact-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text)}
+    .contact-label{font-weight:700;color:var(--p);min-width:60px;flex-shrink:0;font-size:12px;text-transform:uppercase;letter-spacing:0.3px;padding-top:1px}
+    .contact-value{color:#0f172a;line-height:1.5}
+    .divider{height:1px;background:var(--border);margin:12px 0}
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="/dashboard"><div class="logo-icon">U</div>Uni-Connect Westminster</a>
+    <div style="display:flex;gap:10px">
+      <a class="btn" href="/services">Student Services</a>
+      <a class="btn" href="/dashboard">Dashboard</a>
+      <button class="btn" id="btnLogout">Logout</button>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="hero">
+      <h1>Student Support Services</h1>
+      <p>The University of Westminster offers a wide range of free support services. Find the right help for you below — all contact details are listed directly on this page.</p>
+    </div>
+
+    <div class="emergency-box">
+      <div class="emergency-icon">🚨</div>
+      <div>
+        <h4>Need urgent help?</h4>
+        <p>If you or someone else is in immediate danger call 999. For urgent mental health support call the Samaritans on 116 123 (free, 24/7). The Student Wellbeing team is available during office hours on 020 7911 5000 ext 66899.</p>
+      </div>
+    </div>
+
+    <!-- PERSONAL SUPPORT -->
+    <div class="section">
+      <div class="section-title">Personal Support Services</div>
+      <div class="section-sub">Help with personal, psychological, health and social matters</div>
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">🧠</span>
+            <div class="card-title">Student Wellbeing</div>
+          </div>
+          <div class="card-desc">Free support for students experiencing personal, psychological or mental health difficulties. Self-refer online for counselling and wellbeing appointments available in person and remotely.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/student-wellbeing</span></div>
+            <div class="contact-item"><span class="contact-label">Email</span><span class="contact-value">student-wellbeing@westminster.ac.uk</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">💬</span>
+            <div class="card-title">Counselling Service</div>
+          </div>
+          <div class="card-desc">Confidential counselling sessions to help with stress, anxiety, depression and personal difficulties during your studies. Available to all registered students free of charge.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/counselling</span></div>
+            <div class="contact-item"><span class="contact-label">Email</span><span class="contact-value">counselling@westminster.ac.uk</span></div>
+            <div class="contact-item"><span class="contact-label">Phone</span><span class="contact-value">020 7911 5000 ext 66899</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">♿</span>
+            <div class="card-title">Disability Learning Support</div>
+          </div>
+          <div class="card-desc">Support for students with disabilities including dyslexia, dyspraxia, AD(H)D, mental health conditions, hearing impairment, visual impairment, mobility issues and long term health conditions. The Equality Act defines disability as a physical or mental impairment which has a substantial and long-term adverse effect on a person's ability to perform normal day-to-day activities.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/disability</span></div>
+            <div class="contact-item"><span class="contact-label">Email</span><span class="contact-value">DLS@westminster.ac.uk</span></div>
+            <div class="contact-item"><span class="contact-label">Phone</span><span class="contact-value">020 7911 5000 ext 68800</span></div>
+            <div class="contact-item"><span class="contact-label">Note</span><span class="contact-value">Or speak to your faculty Disability Tutor — see website for contact details</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">🛡️</span>
+            <div class="card-title">Report and Support</div>
+          </div>
+          <div class="card-desc">Report incidents of bullying, harassment, discrimination or sexual misconduct. Anonymous reporting is available. All reports are handled with care and confidentiality.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">reportandsupport.westminster.ac.uk</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">🕌</span>
+            <div class="card-title">Faith and Spirituality</div>
+          </div>
+          <div class="card-desc">Support and spaces for students of all faiths and none. Chaplaincy services, prayer rooms and interfaith events are available across all campuses.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/faith-and-spirituality</span></div>
+            <div class="contact-item"><span class="contact-label">Email</span><span class="contact-value">interfaith@westminster.ac.uk</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">🤝</span>
+            <div class="card-title">Equality and Diversity</div>
+          </div>
+          <div class="card-desc">Support and advice on equality, diversity and inclusion issues. Every student has the right to study in an environment free from discrimination, bullying and harassment.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/equality-and-diversity</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ACADEMIC SUPPORT -->
+    <div class="section">
+      <div class="section-title">Academic Support Services</div>
+      <div class="section-sub">Help with your studies, assignments, digital skills and academic development</div>
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">📚</span>
+            <div class="card-title">Academic Learning Development</div>
+          </div>
+          <div class="card-desc">Support with reading, writing, critical thinking, referencing, presentations and planning your assignments and coursework. Available to all students throughout the academic year.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/learning-and-studyskills-support</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">✍️</span>
+            <div class="card-title">Academic English</div>
+          </div>
+          <div class="card-desc">Improve your academic writing and English language skills. Workshops, one-to-one sessions and online resources available for students who need to enhance their language skills.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/academic-english</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">🏛️</span>
+            <div class="card-title">Library and IT</div>
+          </div>
+          <div class="card-desc">Access physical and digital library resources, book study spaces, request books and get subject librarian support for your assignments and research projects.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/library-and-it</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">💻</span>
+            <div class="card-title">Blackboard Support</div>
+          </div>
+          <div class="card-desc">Help accessing your course materials, submitting assignments and using the Blackboard Virtual Learning Environment. Contact if you are having problems accessing your course materials.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/blackboard-intro</span></div>
+            <div class="contact-item"><span class="contact-label">Email</span><span class="contact-value">blackboard-support@westminster.ac.uk</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">🖥️</span>
+            <div class="card-title">IT Training and Software</div>
+          </div>
+          <div class="card-desc">Free IT training, software access and digital literacy support. Microsoft Office, Adobe and specialist software available. Help with developing your IT skills for study and employment.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/it-training</span></div>
+            <div class="contact-item"><span class="contact-label">IT</span><span class="contact-value">westminster.ac.uk/library-and-it/it-and-software</span></div>
+            <div class="contact-item"><span class="contact-label">Digital</span><span class="contact-value">westminster.ac.uk/digital-literacy</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">🌐</span>
+            <div class="card-title">Polylang Language Support</div>
+          </div>
+          <div class="card-desc">Additional language tuition and support for students who need to develop their English language skills or study a new language alongside their degree programme.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/about-polylang</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FINANCIAL AND PRACTICAL -->
+    <div class="section">
+      <div class="section-title">Financial and Practical Support</div>
+      <div class="section-sub">Help with money, housing, visas, careers and university administration</div>
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">💰</span>
+            <div class="card-title">Student Funding</div>
+          </div>
+          <div class="card-desc">Advice on bursaries, scholarships, emergency funds, Student Finance and financial hardship support. Contact if you are experiencing financial difficulties or need advice on funding and entitlements.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/student-finance</span></div>
+            <div class="contact-item"><span class="contact-label">Email</span><span class="contact-value">studentfunding@westminster.ac.uk</span></div>
+            <div class="contact-item"><span class="contact-label">Phone</span><span class="contact-value">020 7911 5000 ext 66989</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">🏠</span>
+            <div class="card-title">Student Accommodation</div>
+          </div>
+          <div class="card-desc">University managed halls of residence and private accommodation advice. Help with housing issues, contracts and problems with your housing or halls of residence.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/accommodation</span></div>
+            <div class="contact-item"><span class="contact-label">Email</span><span class="contact-value">studentaccommodation@westminster.ac.uk</span></div>
+            <div class="contact-item"><span class="contact-label">Phone</span><span class="contact-value">020 7911 5000 ext 65817</span></div>
+            <div class="contact-item"><span class="contact-label">UWSU</span><span class="contact-value">uwsu.com/housing</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">⚖️</span>
+            <div class="card-title">Student Advice</div>
+          </div>
+          <div class="card-desc">Impartial advice on plagiarism, mitigating circumstances, complaints, appeals, exclusion and withdrawals of services. Also help with visa queries and entitlements.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/student-advice</span></div>
+            <div class="contact-item"><span class="contact-label">Email</span><span class="contact-value">studentadvice@westminster.ac.uk</span></div>
+            <div class="contact-item"><span class="contact-label">Phone</span><span class="contact-value">020 7911 5000 ext 66080</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">💼</span>
+            <div class="card-title">Careers and Employability</div>
+          </div>
+          <div class="card-desc">CV advice, mock interviews, work placements, volunteering and graduate employment support. Book appointments with careers advisors and access the Westminster employer network.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/careers</span></div>
+            <div class="contact-item"><span class="contact-label">Email</span><span class="contact-value">careers@westminster.ac.uk</span></div>
+            <div class="contact-item"><span class="contact-label">Phone</span><span class="contact-value">020 7911 5000 ext 65184</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">🎓</span>
+            <div class="card-title">Students Union Advice</div>
+          </div>
+          <div class="card-desc">Free, independent advice from your Students Union on academic issues, housing, money and personal matters. The SU represents your interests to the university.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">uwsu.com/advice</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">📋</span>
+            <div class="card-title">Student Engagement and Attendance</div>
+          </div>
+          <div class="card-desc">Information and support regarding the Student Engagement and Attendance system. Contact your Registry if you need advice about attendance requirements or engagement monitoring.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/sea</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-icon">🏫</span>
+            <div class="card-title">Student Centre</div>
+          </div>
+          <div class="card-desc">If you have a general question or are unsure which team to contact, the Student Centre can help direct you to the right service. Book appointments with various university services in one place.</div>
+          <div class="divider"></div>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-label">Web</span><span class="contact-value">westminster.ac.uk/current-students/support-and-services</span></div>
+            <div class="contact-item"><span class="contact-label">Email</span><span class="contact-value">studentcentre@westminster.ac.uk</span></div>
+            <div class="contact-item"><span class="contact-label">Engage</span><span class="contact-value">engage.westminster.ac.uk</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const token=localStorage.getItem("token");
+    if(!token){window.location.href="/login";}
+    document.getElementById("btnLogout").addEventListener("click",()=>{localStorage.clear();window.location.href="/login";});
+  </script>
+</body>
+</html>

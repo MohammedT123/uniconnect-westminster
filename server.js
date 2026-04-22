@@ -72,6 +72,8 @@ app.get("/communities", (req, res) => res.sendFile(path.join(v, "communities.htm
 app.get("/admin", (req, res) => res.sendFile(path.join(v, "admin.html")));
 app.get("/tips", (req, res) => res.sendFile(path.join(v, "tips.html")));
 app.get("/map", (req, res) => res.sendFile(path.join(v, "map.html")));
+app.get("/support", (req, res) => res.sendFile(path.join(v, "support.html")));
+app.get("/support", (req, res) => res.sendFile(path.join(v, "support.html")));
 app.get("/services", (req, res) => res.sendFile(path.join(v, "services.html")));
 app.get("/noticeboard", (req, res) => res.sendFile(path.join(v, "noticeboard.html")));
 app.use("/api/noticeboard", require("./routes/noticeboard"));

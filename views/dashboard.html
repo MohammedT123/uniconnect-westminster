@@ -80,9 +80,9 @@
       Uni-Connect Westminster
     </a>
     <div class="nav-right">
-      <div class="user-chip" id="userChip">Loading…</div>
-      <button class="btn" onclick="window.location.href='/profile'">👤 Profile</button>
-      <button class="btn btn-p" onclick="window.location.href='/saved'">⭐ Saved</button>
+      <div class="user-chip" id="userChip">Loading...</div>
+      <button class="btn" onclick="window.location.href='/profile'">Profile</button>
+      <button class="btn btn-p" onclick="window.location.href='/saved'">Saved</button>
       <button class="btn" id="btnLogout">Sign out</button>
     </div>
   </nav>
@@ -96,12 +96,12 @@
       </div>
       <div class="hero-content">
         <div class="hero-greeting">University of Westminster</div>
-        <h1 id="heroTitle">Welcome back 👋</h1>
+        <h1 id="heroTitle">Welcome back</h1>
         <p>Your all-in-one student platform. Find jobs, discover accommodation and connect with communities — everything in one place.</p>
         <div class="hero-btns">
-          <button class="hero-btn hero-btn-w" onclick="window.location.href='/jobs'">💼 Browse Jobs</button>
-          <button class="hero-btn hero-btn-o" onclick="window.location.href='/accommodation'">🏠 Find Housing</button>
-          <button class="hero-btn hero-btn-o" onclick="window.location.href='/communities'">👥 Communities</button>
+          <button class="hero-btn hero-btn-w" onclick="window.location.href='/jobs'">Browse Jobs</button>
+          <button class="hero-btn hero-btn-o" onclick="window.location.href='/accommodation'">Find Housing</button>
+          <button class="hero-btn hero-btn-o" onclick="window.location.href='/communities'">Communities</button>
         </div>
       </div>
     </div>
@@ -142,21 +142,21 @@
         <div class="card-icon-wrap card-icon-jobs">💼</div>
         <h3>Student Jobs</h3>
         <p>Browse live part-time jobs and internships near Westminster powered by the Adzuna API.</p>
-        <span class="card-tag">🟢 Live API Data</span>
+        <span class="card-tag">Live API Data</span>
       </div>
       <div class="card" onclick="window.location.href='/accommodation'">
         <div class="card-arrow">→</div>
         <div class="card-icon-wrap card-icon-acc">🏠</div>
         <h3>Accommodation</h3>
         <p>Discover student-friendly housing near campus. View full details including price, type and distance.</p>
-        <span class="card-tag">Browse → Save → Enquire</span>
+        <span class="card-tag">Browse — Save — Enquire</span>
       </div>
       <div class="card" onclick="window.location.href='/communities'">
         <div class="card-arrow">→</div>
         <div class="card-icon-wrap card-icon-comm">👥</div>
         <h3>Communities</h3>
         <p>Find societies, clubs and social groups at Westminster. Filter by category and connect with others.</p>
-        <span class="card-tag">Browse → Save → Join</span>
+        <span class="card-tag">Browse — Save — Join</span>
       </div>
     </div>
 
@@ -204,7 +204,7 @@
 
     <div class="section-header">
       <div>
-        <div class="section-title">🎓 Student Life</div>
+        <div class="section-title">Student Life</div>
         <div class="section-sub">Everything to help you settle into Westminster</div>
       </div>
     </div>
@@ -242,12 +242,20 @@
         </div>
         <div class="quick-arrow">→</div>
       </div>
+      <div class="quick-card" onclick="window.location.href='/support'">
+        <div class="quick-icon" style="background:#fef2f2">🤝</div>
+        <div class="quick-text">
+          <h4>Student Support</h4>
+          <p>Wellbeing, counselling, disability, funding and more</p>
+        </div>
+        <div class="quick-arrow">→</div>
+      </div>
     </div>
 
   </div>
 
   <div class="footer">
-    Uni-Connect Westminster © <span id="yr"></span> • Built for <span>University of Westminster</span> students
+    Uni-Connect Westminster © <span id="yr"></span> — Built for <span>University of Westminster</span> students
   </div>
 
   <script>
