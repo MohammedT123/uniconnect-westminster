@@ -70,7 +70,7 @@
     .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:12px 22px;border-radius:14px;font-weight:700;font-size:14px;display:none;z-index:9999}
   </style>
 </head>
-<body>
+<body><div id="adminGate" style="position:fixed;inset:0;background:#0f172a;display:flex;align-items:center;justify-content:center;z-index:9999"><div style="background:#1e293b;padding:40px;border-radius:16px;width:340px;text-align:center"><h2 style="color:#fff;margin-bottom:4px;font-size:20px">Admin Panel</h2><p style="color:#94a3b8;font-size:13px;margin-bottom:20px">Uni-Connect Westminster</p><input id="gateInput" type="password" placeholder="Enter admin password" style="width:100%;padding:12px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#fff;font-size:14px;margin-bottom:12px;box-sizing:border-box"/><button onclick="gateCheck()" style="width:100%;padding:12px;background:#7c3aed;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer">Login</button><p id="gateErr" style="color:#ef4444;font-size:12px;margin-top:8px;display:none">Incorrect password. Try again.</p></div></div><script>function gateCheck(){if(document.getElementById('gateInput').value==='uniconnect_admin_2026'){document.getElementById('adminGate').style.display='none';sessionStorage.setItem('adminAuth','true');}else{document.getElementById('gateErr').style.display='block';}}document.getElementById('gateInput').addEventListener('keypress',function(e){if(e.key==='Enter')gateCheck();});if(sessionStorage.getItem('adminAuth')==='true'){document.getElementById('adminGate').style.display='none';}</script>
 
 <nav>
   <a class="logo" href="/dashboard">
